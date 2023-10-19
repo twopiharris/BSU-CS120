@@ -1,0 +1,12 @@
+ADDER PseudoCode
+
+Create an integer variable for x
+Create an integer variable for y
+Create an integer variable for sum
+
+Ask user for X, store in X
+Ask user for Y, store in Y
+Add X and Y, store in sum
+
+print sum
+

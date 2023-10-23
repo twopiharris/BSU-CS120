@@ -24,7 +24,7 @@ def main():
     #load an image
     cardinal = pygame.image.load("Charlie.png")
     cardinal = cardinal.convert_alpha()
-    cardinal = pygame.transform.scale(cardinal, (100, 50))
+    cardinal = pygame.transform.scale(cardinal, (100, 100))
 
     # set up some cardinal variables
     cardinal_x = 0

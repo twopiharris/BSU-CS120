@@ -1,0 +1,93 @@
+classDiagram
+
+class Scene {
+  Surface background
+  Surface screen
+  List sprites
+  __init__()
+  start()
+  stop()
+  makeSpriteGroup(sprites)
+  addSpriteGroup(group)
+  setCaption(title)
+  doEvents(event)
+  update()
+}
+
+
+class Sprite {
+    pygame Sprite object
+}
+
+class SuperSprite {
+    __init__(scene)
+    setImage(image)
+    setSize(x, y)
+    setPosition(x, y)
+    setSpeed(speed)
+    speedUp(amount)
+    setAngle(dir)
+    setImageAngle(angle)
+    setMoveAngle(angle)
+    setDX(dx)
+    setDY(dy)
+    addDX(ddx)
+    addDY(ddy)
+    setComponents((dx, dy))
+    moveBy((dx, dy))
+    addForce(amt, angle)
+    forward(amt)
+    rotateBy(amt)
+    setBoundAction(action)
+    setSpeedLimits(max, min)
+    mouseDown()
+    clicked()
+    collidesWith(target)
+    collidesGroup(group)
+    distanceTo(x, y)
+    dirTo(x, y)
+    dataTrace()
+    checkEvents()
+    checkBounds()
+}
+
+SuperSprite --|> Sprite
+
+class Label {
+    Font font
+    string text
+    color fgColor
+    color bgColor
+    coord center
+    coord size
+}
+
+Label --|> Sprite
+
+class Button {
+    bool active
+    bool clicked
+}
+
+Button --|> Label
+
+class Scroller {
+    int value
+    int minValue
+    int maxValue
+    int increment
+}
+
+Scroller --|> Button
+
+class MultiLabel {
+    list textLines
+    font font
+    color fgColor
+    color bgColor
+    coords center
+    coords size
+}
+
+MultiLabel --|> Sprite
+

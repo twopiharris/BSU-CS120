@@ -1,16 +1,24 @@
 """ gameEngine.py 
+
     high-level tools to simplify pygame programming
     for Game Programming - The L-Line
     by Andy Harris, 2006
+
+    updated for CS120 2023 Andy Harris
+    add sprite.resize()
+    include moveAngle imageAngle clarifications
+    add automated convertAlpha for png
+    add Timer object start() and getElapsedTime() methods
+
 """
 
-import pygame, math
+import pygame, math, time
 pygame.init()
 
 class BasicSprite(pygame.sprite.Sprite):
     """ use this sprite when you want to 
         directly control the sprite with dx and dy
-        or want to extend in another direction than DirSprite
+        or want to extend in another direction than SuperSprite
     """
     def __init__(self, scene):
         pygame.sprite.Sprite.__init__(self)
@@ -255,7 +263,10 @@ class SuperSprite(pygame.sprite.Sprite):
             default setting should be facing east.  Image
             will be rotated automatically """
         self.imageMaster = pygame.image.load(image)
-        self.imageMaster = self.imageMaster.convert()
+        if image.endswith(".png"):
+          self.imageMaster = self.imageMaster.convert_alpha()
+        else:
+          self.imageMaster = self.imageMaster.convert()
     
     def setDX(self, dx):
         """ changes dx value and updates vector """
@@ -691,10 +702,28 @@ class MultiLabel(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = self.center
 
+
+class Timer(object):
+  def __init__(self):
+    super().__init__()
+    self.start()
+
+  def start(self):
+    self.__startTime = time.time()
+
+  def getElapsedTime(self):
+    self.__now = time.time()
+    elapsedTime = self.__now - self.__startTime
+    return elapsedTime
+
+
+
 if __name__ == "__main__":
     # change this code to test various features of the engine
     # This code will not run when gameEngine is run as a module
     # (as it usually will be
+
+    timer = Timer()
         
     game = Scene()
     thing = SuperSprite(game)
@@ -704,3 +733,6 @@ if __name__ == "__main__":
     game.sprites = [thing]
     
     game.start()
+
+    print(f"Elapsed time: {timer.getElapsedTime():.2f} seconds")
+

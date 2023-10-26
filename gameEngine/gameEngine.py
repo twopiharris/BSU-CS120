@@ -311,6 +311,8 @@ class SuperSprite(pygame.sprite.Sprite):
             expects an (x, y) tuple
         """
         (self.x, self.y) = position
+        #update the rect
+        self.rect.center = self.x, self.y
         
     def moveBy (self, vector):
         """ move the sprite by the (dx, dy) values in vector

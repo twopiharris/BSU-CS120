@@ -10,9 +10,21 @@ def main():
   scene = gameEngine.Scene()
   scene.background.fill(pygame.Color("papayawhip"))
   scene.setCaption("Baby You Can Drive My Car!")
+
   scene.car = Car(scene)
   scene.coin = Coin(scene)
-  scene.sprites = [scene.car, scene.coin]
+
+  scene.lblTimer = gameEngine.Label()
+  scene.lblTimer.center = (100, 30)
+
+  scene.lblScore = gameEngine.Label()
+  scene.lblScore.center = (550, 30)
+  scene.lblScore.text = "Score: 0"
+  scene.score = 0
+
+  scene.sprites = [scene.lblTimer, scene.lblScore, scene.car, scene.coin]
+  scene.timer = gameEngine.Timer()
+  scene.MAXTIME = 30
 
   scene.start()
 
@@ -28,19 +40,30 @@ class Car(gameEngine.SuperSprite):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
       self.turnBy(5)
-    if keys[pygame.K_RIGHT]:
+    elif keys[pygame.K_RIGHT]:
       self.turnBy(-5)
     if keys[pygame.K_UP]:
       self.forward(5)
-    if keys[pygame.K_DOWN]:
+    elif keys[pygame.K_DOWN]:
       self.forward(-5)
 
   def checkCollision(self):
     if self.collidesWith(self.scene.coin):
+      self.scene.score += 1
+      self.scene.lblScore.text = f"Score: {self.scene.score}"
       self.coinSound.play()
       self.scene.coin.reset()
 
+  def checkTime(self):
+    time = self.scene.timer.getElapsedTime()
+    if time > self.scene.MAXTIME:
+      self.scene.stop()
+    else:
+      timeLeft = self.scene.MAXTIME - time
+      self.scene.lblTimer.text = f"time left: {timeLeft:.2f}"
+
   def checkEvents(self):
+    self.checkTime()
     self.checkKeys()
     self.checkCollision()
 
@@ -50,7 +73,6 @@ class Coin(gameEngine.SuperSprite):
     self.reset()
     self.setImage("Coin.png")
     self.setSize(25, 25)
-
 
   def reset(self):
     """ move to a new position """

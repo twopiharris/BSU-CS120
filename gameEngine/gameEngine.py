@@ -295,6 +295,12 @@ class SuperSprite(pygame.sprite.Sprite):
         (self.dx, self.dy) = components
         self.updateVector()
         
+    def changeXby(self, value):
+        self.x += value
+        
+    def changeYby(self, value):
+        self.y += value
+        
     def setBoundAction (self, action):
         """ sets action for boundary.  Values are
             self.WRAP (wrap around edge - default)

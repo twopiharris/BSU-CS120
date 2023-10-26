@@ -1,4 +1,4 @@
-import pygame, gameEngine, random
+import pygame, simpleGE, random
 
 """ car image - Andy Harris
     coin image - https://opengameart.org/content/coin-icon
@@ -7,28 +7,28 @@ import pygame, gameEngine, random
 
 def main():
   pygame.mixer.init()
-  scene = gameEngine.Scene()
+  scene = simpleGE.Scene()
   scene.background.fill(pygame.Color("papayawhip"))
   scene.setCaption("Baby You Can Drive My Car!")
   
   scene.car = Car(scene)
   scene.coin = Coin(scene)
 
-  scene.lblTimer = gameEngine.Label()
+  scene.lblTimer = simpleGE.Label()
   scene.lblTimer.center = (100, 30)
 
-  scene.lblScore = gameEngine.Label()
-  scene.lblScore.center = (550, 30)
-  scene.lblScore.text = "Score: 0"
+  scene.lblScore = simpleGE.Label()
+  scene.lblScore.center = (550, 30)                                                               
+  scene.lblScore.text = "Score: 0"                      
   scene.score = 0
 
   scene.sprites = [scene.lblTimer, scene.lblScore, scene.car, scene.coin]
-  scene.timer = gameEngine.Timer()
+  scene.timer = simpleGE.Timer()
   scene.MAXTIME = 30
 
   scene.start()
 
-class Car(gameEngine.SuperSprite):
+class Car(simpleGE.SuperSprite):
   def __init__(self, scene):
     super().__init__(scene)
     self.setImage("car.gif")
@@ -67,7 +67,7 @@ class Car(gameEngine.SuperSprite):
     self.checkKeys()
     self.checkCollision()
 
-class Coin(gameEngine.SuperSprite):
+class Coin(simpleGE.SuperSprite):
   def __init__(self, scene):
     super().__init__(scene)
     self.reset()

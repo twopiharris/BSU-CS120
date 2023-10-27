@@ -18,6 +18,7 @@ class Charlie(simpleGE.SuperSprite):
         if keys[pygame.K_DOWN]:
             self.y += 5
         """
+        
         if self.scene.isKeyPressed(pygame.K_LEFT):
             self.x -= 5
         if self.scene.isKeyPressed(pygame.K_RIGHT):

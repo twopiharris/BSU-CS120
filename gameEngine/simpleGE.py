@@ -640,6 +640,10 @@ class Scene(object):
     def setCaption(self, title):
         """ set's the scene's title text """
         pygame.display.set_caption(title)
+        
+    def isKeyPressed(self, key):
+        keysDown = pygame.key.get_pressed()
+        return keysDown[key]
 
 class Label(pygame.sprite.Sprite):
     """ a basic label 

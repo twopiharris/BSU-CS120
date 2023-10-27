@@ -7,18 +7,6 @@ class Charlie(simpleGE.SuperSprite):
         self.setSize(50, 50)
         
     def checkEvents(self):
-        """
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.x -= 5
-        if keys[pygame.K_RIGHT]:
-            self.x += 5
-        if keys[pygame.K_UP]:
-            self.y -= 5
-        if keys[pygame.K_DOWN]:
-            self.y += 5
-        """
-        
         if self.scene.isKeyPressed(pygame.K_LEFT):
             self.x -= 5
         if self.scene.isKeyPressed(pygame.K_RIGHT):

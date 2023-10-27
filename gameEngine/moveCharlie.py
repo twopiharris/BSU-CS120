@@ -14,7 +14,7 @@ class MyScene(simpleGE.Scene):
 
         
     def doEvents(self, event):
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYPRESSED:
             if event.key == pygame.K_LEFT:
                 self.charlie.x -= 5
             if event.key == pygame.K_RIGHT:

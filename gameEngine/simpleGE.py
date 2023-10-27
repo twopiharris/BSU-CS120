@@ -41,6 +41,7 @@ class BasicSprite(pygame.sprite.Sprite):
     @x.setter 
     def x(self, value):
         self.__x = value
+        self.rect.centerx = self.__x
 
     @property 
     def y(self):
@@ -49,6 +50,7 @@ class BasicSprite(pygame.sprite.Sprite):
     @y.setter 
     def y(self, value):
         self.__y = value
+        self.rect.centery = self.__y
 
     @property 
     def dx(self):
@@ -89,6 +91,7 @@ class BasicSprite(pygame.sprite.Sprite):
             
     def setSize(self, newX, newY):
         self.image = pygame.transform.scale(self.image, (newX, newY))
+        self.rect = self.image.get_rect()
         
     def setImage (self, imageFile):
         """ loads the given file name as the master image
@@ -99,6 +102,7 @@ class BasicSprite(pygame.sprite.Sprite):
           self.image = self.image.convert_alpha()
         else:
           self.image = self.image.convert()
+        self.rect = self.image.get_rect()
           
     def collidesWith(self, target):
         """ boolean function. Returns True if the sprite

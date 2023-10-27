@@ -1,10 +1,9 @@
+""" charlieGE.py """
 import pygame, simpleGE
 
 scene = simpleGE.Scene()
 scene.background = pygame.image.load("campus.jpg")
 scene.background = pygame.transform.scale(scene.background, (640, 480))
-
-breakpoint()
 
 charlie = simpleGE.BasicSprite(scene)
 charlie.setImage("Charlie.gif")

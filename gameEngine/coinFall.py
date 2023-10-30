@@ -22,11 +22,17 @@ class Coin(simpleGE.BasicSprite):
             
 def main():
     scene = simpleGE.Scene()
+    
+    coin = Coin(scene)
+    scene.sprites = [coin]
+    
+    """
     coins = []
     
     for i in range(200):
         coins.append(Coin(scene))
     scene.sprites = coins
+    """
     
     scene.start()
     

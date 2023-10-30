@@ -12,7 +12,7 @@ class MyScene(simpleGE.Scene):
         self.charlie.setSize(50, 50)
         self.sprites = [self.charlie]
 
-    """   
+
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -23,6 +23,7 @@ class MyScene(simpleGE.Scene):
             self.charlie.y -= 5
         if keys[pygame.K_DOWN]:
             self.charlie.y += 5
+
     """
       
     def update(self):
@@ -34,6 +35,7 @@ class MyScene(simpleGE.Scene):
             self.charlie.y -= 5
         if self.isKeyPressed(pygame.K_DOWN):
             self.charlie.y += 5
+"""
             
 
 def main():

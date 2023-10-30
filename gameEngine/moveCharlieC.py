@@ -1,6 +1,6 @@
 import pygame, simpleGE
 
-class Charlie(simpleGE.SuperSprite):
+class Charlie(simpleGE.BasicSprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Charlie.png")

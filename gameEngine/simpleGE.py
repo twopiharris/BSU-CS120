@@ -9,11 +9,13 @@
     include moveAngle imageAngle clarifications
     add automated convertAlpha for png
     add Timer object start() and getElapsedTime() methods
+    add Sound object to simplify sound effects
 
 """
 
 import pygame, math, time
 pygame.init()
+pygame.mixer.init()
 
 class BasicSprite(pygame.sprite.Sprite):
     """ use this sprite when you want to 
@@ -798,6 +800,14 @@ class Timer(object):
     return elapsedTime
 
 
+class Sound(object):
+  def __init__(self, soundFile):
+    super().__init__()
+    self.sound = pygame.mixer.Sound(soundFile)
+
+  def play(self):
+    self.sound.play()
+
 
 if __name__ == "__main__":
     # change this code to test various features of the engine
@@ -805,7 +815,10 @@ if __name__ == "__main__":
     # (as it usually will be
 
     timer = Timer()
-        
+    
+    mySound = Sound("pew.wav")
+    mySound.play()
+    
     game = Scene()
     thing = SuperSprite(game)
     thing.setSpeed(5)
@@ -816,4 +829,5 @@ if __name__ == "__main__":
     game.start()
 
     print(f"Elapsed time: {timer.getElapsedTime():.2f} seconds")
-
+    dummy = input("Press enter to quit")
+    pygame.quit()

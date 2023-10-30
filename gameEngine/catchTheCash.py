@@ -1,6 +1,37 @@
-""" catchTheCash.py """
+""" catchTheCash.py 
+    coin image - https://opengameart.org/content/coin-icon
+    coin sound - https://opengameart.org/content/plingy-coin
+"""
 import pygame, simpleGE, random
 
+class Game(simpleGE.Scene):
+    def __init__(self):
+        super().__init__()
+        self.charlie = Charlie(self)
+        
+        self.coins = []
+        for i in range(5):
+            self.coins.append(Coin(self))
+            
+        self.lblScore = simpleGE.Label()
+        self.lblScore.text = "Score: 0"
+        self.lblScore.center = (50, 50)
+        self.score = 0
+
+        self.lblTime = simpleGE.Label()
+        self.lblTime.text = "Time left: 30"
+        self.lblTime.center = (550, 50)
+
+        self.timer = simpleGE.Timer()
+
+        self.sprites = [self.lblScore, self.lblTime, self.charlie, self.coins]
+
+    def update(self):
+        timeLeft = 30 - self.timer.getElapsedTime()
+        if timeLeft < 0:
+            self.stop()
+        self.lblTime.text = f"Time left: {timeLeft:.2f}"
+        self.lblScore.text = f"score: {self.score}"
 
 class Charlie(simpleGE.BasicSprite):
     """ moves on bottom of screen with arrows """
@@ -32,42 +63,24 @@ class Coin(simpleGE.BasicSprite):
         newX = random.randint(0, 640)
         self.x = newX
         self.y = 10
-        self.fallSpeed = random.randint(5,10)
-	
+        self.dy = random.randint(5,10)
+       
+        
     def checkEvents(self):
-        self.y += self.fallSpeed
-        timeLeft = 30 - self.scene.timer.getElapsedTime()
-        self.scene.lblTime.text = f"Time left: {timeLeft:.2f}"
-        if timeLeft < 0:
-            self.scene.stop()
-
         if self.collidesWith(self.scene.charlie):
             self.scene.score += 1
-            self.scene.lblScore.text = f"score: {self.scene.score}"
             self.coinSound.play()
             self.reset()
-
+        
+    def checkBounds(self):
+        if self.rect.bottom > self.screen.get_height():
+            self.reset()
 
 def main():
-    scene = simpleGE.Scene()
-    scene.charlie = Charlie(scene)
-    scene.coin = Coin(scene)
-
-    scene.lblScore = simpleGE.Label()
-    scene.lblScore.text = "Score: 0"
-    scene.lblScore.center = (50, 50)
-    scene.score = 0
-
-    scene.lblTime = simpleGE.Label()
-    scene.lblTime.text = "Time left: 30"
-    scene.lblTime.center = (550, 50)
-
-    scene.timer = simpleGE.Timer()
-
-    scene.sprites = [scene.lblScore, scene.lblTime, scene.charlie, scene.coin]
-
-    scene.start()
+    game = Game()
+    game.start()
+    print (f"final score: {game.score}")
 
 if __name__ == "__main__":
-  main()        
+    main()        
         

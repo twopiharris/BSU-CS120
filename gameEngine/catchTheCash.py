@@ -64,7 +64,6 @@ class Coin(simpleGE.BasicSprite):
         self.x = newX
         self.y = 10
         self.dy = random.randint(5,10)
-       
         
     def checkEvents(self):
         if self.collidesWith(self.scene.charlie):

@@ -255,7 +255,7 @@ class SuperSprite(pygame.sprite.Sprite):
                 self.dy *= -1
                 
             self.updateVector()
-            self.rotation = self.dir
+            #self.rotation = self.dir
         
         elif self.boundAction == self.STOP:
             if offScreen:
@@ -685,6 +685,12 @@ class Label(pygame.sprite.Sprite):
         
     def checkEvents(self):
         pass
+    
+    def hide(self):
+        self.setPosition(-1000, -1000)
+    
+    def show(self, position):
+        self.setPosition(position)
 
 class Button(Label):
     """ a button based on the label 
@@ -792,6 +798,12 @@ class MultiLabel(pygame.sprite.Sprite):
 
     def checkEvents(self):
         pass
+    
+    def hide(self):
+        self.setPosition(-1000, -1000)
+        
+    def show(self, position):
+        self.setPosition(position)
 
 class Timer(object):
   def __init__(self):
@@ -821,10 +833,7 @@ if __name__ == "__main__":
     # This code will not run when gameEngine is run as a module
     # (as it usually will be
 
-    timer = Timer()
     
-    mySound = Sound("pew.wav")
-    mySound.play()
     
     game = Scene()
     thing = SuperSprite(game)
@@ -835,6 +844,4 @@ if __name__ == "__main__":
     
     game.start()
 
-    print(f"Elapsed time: {timer.getElapsedTime():.2f} seconds")
-    dummy = input("Press enter to quit")
     pygame.quit()

@@ -74,7 +74,23 @@ class BtnQuit(simpleGE.Button):
             self.scene.stop()
             
     def makeVisible(self):
-        self.center = (300, 200)
+        self.center = (150, 200)
+        
+class BtnReset(simpleGE.Button):
+    def __init__(self, scene):
+        super().__init__()
+        self.scene = scene
+        self.center = (-1000, -1000)
+        self.text = "Restart"
+        
+    def update(self):
+        super().update()
+        if self.clicked:
+            self.scene.reset()
+            
+    def makeVisible(self):
+        self.center = (450, 200)
+        
         
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -82,7 +98,7 @@ class Game(simpleGE.Scene):
         
         self.charlie = Charlie(self)
         self.coins = []
-        for i in range(5):
+        for i in range(10):
             self.coins.append(Coin(self))
         
         self.lblScore = LblScore()
@@ -91,14 +107,15 @@ class Game(simpleGE.Scene):
         self.gameOver = False
         
         self.btnQuit = BtnQuit(self)
+        self.btnReset = BtnReset(self)
         
         self.sprites = [self.lblTime, self.lblScore, 
                         self.charlie, self.coins,
-                        self.btnQuit]
+                        self.btnQuit, self.btnReset]
         
     def endGame(self):
         self.btnQuit.makeVisible()
-        
+        self.btnReset.makeVisible()
         self.lblTime.text = "Time left: 0.00"
         
         # hide all the coins
@@ -108,6 +125,14 @@ class Game(simpleGE.Scene):
             coin.x = -1000
             coin.y = -1000
             
+    def reset(self):
+        self.btnQuit.center = (-1000, -1000)
+        self.btnReset.center = (-1000, -1000)
+        for coin in self.coins:
+            coin.reset()
+        self.lblTime.timer.start()
+        self.lblScore.score = 0
+        
 def main():
     game = Game()
     game.start()

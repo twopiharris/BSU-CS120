@@ -1,8 +1,6 @@
 import pygame, simpleGE, random
 
 """ car image - Andy Harris
-    coin image - https://opengameart.org/content/coin-icon
-    coin sound - https://opengameart.org/content/plingy-coin
 """
 
 class Car(simpleGE.SuperSprite):

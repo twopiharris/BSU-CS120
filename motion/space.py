@@ -14,6 +14,7 @@ class Ship(simpleGE.SuperSprite):
             "right":  pygame.image.load("shipRight.png"),
             "thrust": pygame.image.load("shipThrust.png")}
         self.imageMaster = self.images["cruise"]
+        self.setAngle(90)
         
     def checkEvents(self):
         self.imageMaster = self.images["cruise"]

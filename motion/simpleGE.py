@@ -1,5 +1,7 @@
 """ simpleGE.py 
 
+    2.1 edition
+    
     high-level tools to simplify pygame programming
     for Game Programming - The L-Line
     by Andy Harris, 2006
@@ -11,6 +13,9 @@
     add Timer object start() and getElapsedTime() methods
     add Sound object to simplify sound effects
 
+    add hide and show methods to GUI elements
+    add checkEvents method to GUI elements
+    minor fix to bounce in SuperSprite
 """
 
 import pygame, math, time

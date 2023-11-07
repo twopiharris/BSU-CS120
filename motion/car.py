@@ -20,12 +20,18 @@ def main():
   scene.lblScore = simpleGE.Label()
   scene.lblScore.center = (550, 30)
   scene.lblScore.text = "Score: 0"
-  scene.score = 0
 
-  scene.sprites = [scene.lblTimer, scene.lblScore, scene.car, scene.coin]
+  scene.btnQuit = simpleGE.Button()
+  scene.btnQuit.text = 'Quit'
+  scene.btnQuit.hide()
+
+  scene.sprites = [scene.lblTimer, scene.lblScore, 
+                   scene.car, scene.coin, scene.btnQuit]
+
+  scene.score = 0
   scene.timer = simpleGE.Timer()
   scene.MAXTIME = 30
-
+  
   scene.start()
 
 class Car(simpleGE.SuperSprite):
@@ -57,10 +63,12 @@ class Car(simpleGE.SuperSprite):
   def checkTime(self):
     time = self.scene.timer.getElapsedTime()
     if time > self.scene.MAXTIME:
-      self.scene.stop()
+      self.scene.btnQuit.show((300, 200))
     else:
       timeLeft = self.scene.MAXTIME - time
       self.scene.lblTimer.text = f"time left: {timeLeft:.2f}"
+    if self.scene.btnQuit.clicked:
+        self.scene.stop()
 
   def checkEvents(self):
     self.checkTime()

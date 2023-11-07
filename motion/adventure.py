@@ -28,7 +28,7 @@ class GameScreen(simpleGE.Scene):
         self.lblDescription.font = pygame.font.Font("goodfoot.ttf", 30)
         self.lblDescription.bgColor = (0xff, 0xff, 0x99)
         self.lblDescription.center = (320,240)
-        self.lblDescription.size = (400, 250)
+        self.lblDescription.size = (400, 300)
         
         self.btnA = simpleGE.Button()
         self.btnA.bgColor = (0x99, 0x99, 0x66)

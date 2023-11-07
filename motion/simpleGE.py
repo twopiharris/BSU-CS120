@@ -684,7 +684,7 @@ class Label(pygame.sprite.Sprite):
         #center the text
         xPos = (self.image.get_width() - fontSurface.get_width())/2
         
-        self.image.blit(fontSurface, (xPos, 0))
+        self.image.blit(fontSurface, (xPos, 5))
         self.rect = self.image.get_rect()
         self.rect.center = self.center
         
@@ -692,10 +692,10 @@ class Label(pygame.sprite.Sprite):
         pass
     
     def hide(self):
-        self.setPosition(-1000, -1000)
+        self.center = (-1000, -1000)
     
     def show(self, position):
-        self.setPosition(position)
+        self.center = position
 
 class Button(Label):
     """ a button based on the label 
@@ -782,6 +782,8 @@ class MultiLabel(pygame.sprite.Sprite):
         self.bgColor = ((0xFF, 0xFF, 0xFF))
         self.center = (100, 100)
         self.size = (150, 100)
+        self.clicked = False
+        self.active = False
         
     def update(self):
         self.checkEvents()
@@ -796,19 +798,33 @@ class MultiLabel(pygame.sprite.Sprite):
             #center the text
             xPos = (self.image.get_width() - fontSurface.get_width())/2
             yPos = lineNum * vSize
-            self.image.blit(fontSurface, (xPos, yPos))
+            self.image.blit(fontSurface, (xPos, yPos + 15))
         
         self.rect = self.image.get_rect()
         self.rect.center = self.center
+        
+        self.clicked = False
+        
+        #check for mouse input
+        if pygame.mouse.get_pressed() == (1, 0, 0):
+            if self.rect.collidepoint(pygame.mouse.get_pos()):
+                self.active = True
+
+        #check for mouse release
+        if self.active == True:
+            if pygame.mouse.get_pressed() == (0, 0, 0):
+                self.active = False
+                if self.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.clicked = True
 
     def checkEvents(self):
         pass
     
     def hide(self):
-        self.setPosition(-1000, -1000)
+        self.center = (-1000, -1000)
         
     def show(self, position):
-        self.setPosition(position)
+        self.center = position
 
 class Timer(object):
   def __init__(self):
@@ -838,13 +854,13 @@ if __name__ == "__main__":
     # This code will not run when gameEngine is run as a module
     # (as it usually will be
 
-    
-    
+            
     game = Scene()
     thing = SuperSprite(game)
     thing.setSpeed(5)
     thing.setBoundAction(thing.BOUNCE)
     thing.setAngle(230)
+        
     game.sprites = [thing]
     
     game.start()

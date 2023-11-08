@@ -65,8 +65,8 @@ class Game(simpleGE.Scene):
             "on the screen. Of course, you",
             "can change the colors and font."
             ]
-        self.multi.size = (400, 120)
-        self.multi.center = (320, 400)
+        self.multi.size = (400, 200)
+        self.multi.center = (320, 370)
         
     def update(self):        
         if self.button.clicked:

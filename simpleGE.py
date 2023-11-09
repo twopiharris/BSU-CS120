@@ -1,6 +1,6 @@
 """ simpleGE.py 
 
-    2.2 edition
+    2.3 edition
     
     high-level tools to simplify pygame programming
     for Game Programming - The L-Line
@@ -16,7 +16,9 @@
     add hide and show methods to GUI elements
     add checkEvents method to GUI elements
     minor fix to bounce in SuperSprite
-    working on textInput
+    add TxtInput object
+    add show and hide methods to BasicSprite, SuperSprite
+    
 """
 
 import pygame, math, time
@@ -41,6 +43,7 @@ class BasicSprite(pygame.sprite.Sprite):
         self.y = 100
         self.dx = 0
         self.dy = 0
+        self.hidden = False
 
     @property 
     def x(self):
@@ -126,6 +129,15 @@ class BasicSprite(pygame.sprite.Sprite):
         #meant to be overwritten
         pass
 
+    def hide(self):
+        self.oldCenter = self.rect.center
+        self.rect.center = (-1000, -1000)
+        self.hidden = True
+        
+    def show(self):
+        self.hidden = False
+        self.rect.center = self.oldCenter
+        
 
 class SuperSprite(pygame.sprite.Sprite):
     """ An enhanced Sprite class
@@ -169,6 +181,7 @@ class SuperSprite(pygame.sprite.Sprite):
         self.boundAction = self.WRAP
         self.pressed = False
         self.oldCenter = (100, 100)
+        self.visible = True
     
     def update(self):
         self.oldCenter = self.rect.center
@@ -495,10 +508,13 @@ class SuperSprite(pygame.sprite.Sprite):
         """ boolean function. Returns True if the sprite
             is currently colliding with the target sprite,
             False otherwise
+            Does not count collision if either sprite is hidden
         """
         collision = False
-        if self.rect.colliderect(target.rect):
-            collision = True
+        if self.visible:
+            if target.visible:
+                if self.rect.colliderect(target.rect):
+                    collision = True
         return collision
     
     def collidesGroup(self, target):
@@ -506,9 +522,16 @@ class SuperSprite(pygame.sprite.Sprite):
             simplifies checking sprite - group collisions
             returns result of collision check (sprite from group 
             that was hit or None)
+            Does not count collision if either sprite is hidden
+            
         """
-        collision = pygame.sprite.spritecollideany(self, target)
-        return collision
+        if self.visible:
+            collision = pygame.sprite.spritecollideany(self, target)
+            if collision:
+                if collision.visible:
+                    return collision
+                else:
+                    return None
         
     def distanceTo(self, point):
         """ returns distance to any point in pixels
@@ -551,7 +574,19 @@ class SuperSprite(pygame.sprite.Sprite):
         
     def changeYby(self, value):
         self.y += value
-    
+
+    def hide(self):
+        self.oldPosition = self.rect.center
+        self.oldBound = self.boundAction
+        self.setBoundAction(self.HIDE)
+        self.setPosition((-1000, -1000))
+        self.visible = False
+        
+    def show(self):
+        self.visible = True
+        self.setBoundAction(self.oldBound)
+        self.setPosition(self.oldPosition)
+
 class Scene(object):
     """ encapsulates the IDEA / ALTER framework
         properties:
@@ -731,7 +766,15 @@ class Button(Label):
                     self.clicked = True
 
 class TxtInput(Button):
-    """ inspired  by https://stackoverflow.com/questions/46390231/how-can-i-create-a-text-input-box-with-pygame """
+    """ Simple text input 
+        Click on input to get to edit mode
+        will switch background to activeColor
+        delete to clear box, backspace to back up
+        text will be available as a property.
+        Note readkeys needs an event object
+        so it must be called from scene's 
+        doEvents() method
+    """
     
     def __init__(self):
         super().__init__()
@@ -754,11 +797,10 @@ class TxtInput(Button):
 
         if event.type == pygame.KEYDOWN:
             if self.takingInput:
-                if event.key == pygame.K_RETURN:
-                    print(self.text)
-                    self.text = ""
-                elif event.key == pygame.K_BACKSPACE:
+                if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
+                elif event.key == pygame.K_DELETE:
+                    self.text = ""
                 else:
                     self.text += event.unicode
 
@@ -884,37 +926,59 @@ class Sound(object):
 class Game(Scene):
     
     """ used only for testing purposes. not a formal part of simpleGE """
-    
     def __init__(self):
         super().__init__()
+        self.red = SuperSprite(self)
+        self.red.imageMaster = pygame.Surface((50, 50))
+        self.red.imageMaster.fill(pygame.Color("red"))
+        self.red.setPosition((320, 240))
         
-        self.txtInput = TxtInput()
-        self.txtInput.text = "NAME"
-        self.txtInput.center = (320, 240)
-        self.txtInput.size = (100, 30)
-        self.txtInput.bgColor = pygame.Color("white")
+        self.blue = SuperSprite(self)
+        self.blue.imageMaster = pygame.Surface((50, 50))
+        self.blue.imageMaster.fill(pygame.Color("blue"))
+        self.blue.setPosition((220, 240))
+ 
+        self.sprites = [self.red]
         
-        self.btnClickMe = Button()
-        self.btnClickMe.text = "Click Me"
-        self.btnClickMe.center = (320, 280)
-        self.btnClickMe.size = (100, 30)
+        self.blueGroup = self.makeSpriteGroup([self.blue])
+        self.addGroup(self.blueGroup)
         
-        self.lblOutput = Label()
-        self.lblOutput.text = "Type your name"
-        self.lblOutput.center = (320, 320)
-        self.lblOutput.size = (200, 30)
-        
-        self.sprites = [self.txtInput, self.btnClickMe, self.lblOutput]
-        
-    def doEvents(self, event):
-        self.txtInput.readKeys(event)
-
     def update(self):
+        
+        #control blue with keys
+        if self.isKeyPressed(pygame.K_LEFT):
+            self.blue.x -= 5
+        if self.isKeyPressed(pygame.K_RIGHT):
+            self.blue.x += 5
 
-        if self.btnClickMe.clicked:
-            name = self.txtInput.text
-            self.lblOutput.text = f"Hi there, {name}!"
-
+        """
+        if self.red.collidesWith(self.blue):
+            self.setCaption("Collision!")
+        else:
+            self.setCaption("No collision.")
+        """
+        
+        collider = self.red.collidesGroup(self.blueGroup)
+        if collider:
+            self.setCaption("Group collision")
+        else:
+            self.setCaption("No group collision")
+     
+    def doEvents(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_b:
+                if self.blue.visible:
+                    self.blue.hide()
+                else:
+                    self.blue.show()
+                    
+            if event.key == pygame.K_r:
+                if self.red.visible:
+                    self.red.hide()
+                else:
+                    self.red.show()
+                
+    
 if __name__ == "__main__":
     # change this code to test various features of the engine
     # This code will not run when gameEngine is run as a module
@@ -922,6 +986,7 @@ if __name__ == "__main__":
         
     game = Game()
     game.start()
+    
     """            
     game = Scene()
     thing = SuperSprite(game)

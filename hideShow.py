@@ -6,10 +6,11 @@ class Game(simpleGE.Scene):
     """ used only for testing purposes. not a formal part of simpleGE """
     def __init__(self):
         super().__init__()
-        self.red = simpleGE.SuperSprite(self)
-        self.red.imageMaster = pygame.Surface((50, 50))
-        self.red.imageMaster.fill(pygame.Color("red"))
-        self.red.setPosition((320, 240))
+        self.red = simpleGE.BasicSprite(self)
+        self.red.image = pygame.Surface((50, 50))
+        self.red.image.fill(pygame.Color("red"))
+        self.red.x = 320
+        self.red.y = 240
         
         self.blue = simpleGE.SuperSprite(self)
         self.blue.imageMaster = pygame.Surface((50, 50))
@@ -29,19 +30,20 @@ class Game(simpleGE.Scene):
         if self.isKeyPressed(pygame.K_RIGHT):
             self.blue.x += 5
 
-        """
+        
         if self.red.collidesWith(self.blue):
             self.setCaption("Collision! (B or R to toggle sprites)")
         else:
             self.setCaption("No collision. (B or R to toggle sprites)")
-        """
         
+        """
         collider = self.red.collidesGroup(self.blueGroup)
         if collider:
             self.setCaption("Group collision (B or R to toggle sprites)")
         else:
             self.setCaption("No group collision (B or R to toggle sprites)")
-     
+        """
+        
     def doEvents(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_b:

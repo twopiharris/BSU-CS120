@@ -43,7 +43,7 @@ class BasicSprite(pygame.sprite.Sprite):
         self.y = 100
         self.dx = 0
         self.dy = 0
-        self.hidden = False
+        self.visible = True
 
     @property 
     def x(self):
@@ -90,15 +90,15 @@ class BasicSprite(pygame.sprite.Sprite):
     def checkBounds(self):
         scrWidth = self.screen.get_width()
         scrHeight = self.screen.get_height()
-        
-        if self.x > scrWidth:
-            self.x = 0
-        if self.x < 0:
-            self.x = scrWidth
-        if self.y > scrHeight:
-            self.y = 0
-        if self.y < 0:
-            self.y = scrHeight
+        if self.visible:
+            if self.x > scrWidth:
+                self.x = 0
+            if self.x < 0:
+                self.x = scrWidth
+            if self.y > scrHeight:
+                self.y = 0
+            if self.y < 0:
+                self.y = scrHeight
             
     def setSize(self, newX, newY):
         self.image = pygame.transform.scale(self.image, (newX, newY))
@@ -121,8 +121,10 @@ class BasicSprite(pygame.sprite.Sprite):
             False otherwise
         """
         collision = False
-        if self.rect.colliderect(target.rect):
-            collision = True
+        if self.visible:
+            if target.visible:
+                if self.rect.colliderect(target.rect):
+                    collision = True
         return collision
 
     def checkEvents(self):
@@ -130,13 +132,15 @@ class BasicSprite(pygame.sprite.Sprite):
         pass
 
     def hide(self):
-        self.oldCenter = self.rect.center
-        self.rect.center = (-1000, -1000)
-        self.hidden = True
+        self.oldPosition = self.rect.center
+        self.x = -1000
+        self.y = -1000
+        self.visible = False
         
     def show(self):
-        self.hidden = False
-        self.rect.center = self.oldCenter
+        self.visible = True
+        self.x = self.oldPosition[0]
+        self.y = self.oldPosition[1]
         
 
 class SuperSprite(pygame.sprite.Sprite):

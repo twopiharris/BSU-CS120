@@ -1,4 +1,4 @@
-import pygame, simpleGE
+import pygame, simpleGE, random
 
 """ game control 
     demonstrate using GUI elements to control game """
@@ -13,6 +13,20 @@ class Instructions (simpleGE.MultiLabel):
         self.center = ((320, 240))
         self.size = ((320, 120))
 
+class Box(simpleGE.SuperSprite):
+    def __init__(self, scene, colorName = "yellow"):
+        super().__init__(scene)
+        self.imageMaster = pygame.Surface((50, 50))
+        self.imageMaster.fill(pygame.Color(colorName))
+        self.setBoundAction(self.WRAP)
+        self.hide()
+        
+    def reset(self):
+        self.x = random.randint(0, self.screen.get_width())
+        self.y = random.randint(0, self.screen.get_height())
+        self.setDX(random.randint(-5, 5))
+        self.setDY(random.randint(-5, 5))
+        
 class LblTimer(simpleGE.Label):
     def __init__(self):
         super().__init__()
@@ -54,13 +68,22 @@ class Game(simpleGE.Scene):
         self.lblTimer = LblTimer()
         self.btnQuit = BtnQuit()
         self.btnReset = BtnReset()
+        self.box = Box(self)
         
+        self.blueBoxes = []
+        for i in range(10):
+            self.blueBoxes.append(Box(self, "blue"))
+            
         self.sprites = [self.instructions, self.lblTimer, 
-                        self.btnQuit, self.btnReset]
-
+                        self.btnQuit, self.btnReset, 
+                        self.box, self.blueBoxes]
 
     def pauseGame(self):
         self.lblTimer.hide()
+        self.box.hide()
+        for bbox in self.blueBoxes:
+            bbox.hide()
+            
         self.btnQuit.show((220, 240))
         self.btnReset.show((420, 240))
 
@@ -70,7 +93,14 @@ class Game(simpleGE.Scene):
         self.btnReset.hide()
         self.lblTimer.show((320, 240))
         self.lblTimer.reset()
-         
+
+        self.box.show()
+        self.box.reset()
+
+        for bbox in self.blueBoxes:
+            bbox.show()
+            bbox.reset()
+        
     def update(self):
         if self.instructions.clicked:
             self.resetGame()            

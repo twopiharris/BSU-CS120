@@ -1,6 +1,6 @@
 """ simpleGE.py 
 
-    2.1 edition
+    2.3 edition
     
     high-level tools to simplify pygame programming
     for Game Programming - The L-Line
@@ -16,6 +16,9 @@
     add hide and show methods to GUI elements
     add checkEvents method to GUI elements
     minor fix to bounce in SuperSprite
+    add TxtInput object
+    add show and hide methods to BasicSprite, SuperSprite
+    
 """
 
 import pygame, math, time
@@ -40,6 +43,7 @@ class BasicSprite(pygame.sprite.Sprite):
         self.y = 100
         self.dx = 0
         self.dy = 0
+        self.visible = True
 
     @property 
     def x(self):
@@ -86,15 +90,15 @@ class BasicSprite(pygame.sprite.Sprite):
     def checkBounds(self):
         scrWidth = self.screen.get_width()
         scrHeight = self.screen.get_height()
-        
-        if self.x > scrWidth:
-            self.x = 0
-        if self.x < 0:
-            self.x = scrWidth
-        if self.y > scrHeight:
-            self.y = 0
-        if self.y < 0:
-            self.y = scrHeight
+        if self.visible:
+            if self.x > scrWidth:
+                self.x = 0
+            if self.x < 0:
+                self.x = scrWidth
+            if self.y > scrHeight:
+                self.y = 0
+            if self.y < 0:
+                self.y = scrHeight
             
     def setSize(self, newX, newY):
         self.image = pygame.transform.scale(self.image, (newX, newY))
@@ -117,14 +121,27 @@ class BasicSprite(pygame.sprite.Sprite):
             False otherwise
         """
         collision = False
-        if self.rect.colliderect(target.rect):
-            collision = True
+        if self.visible:
+            if target.visible:
+                if self.rect.colliderect(target.rect):
+                    collision = True
         return collision
 
     def checkEvents(self):
         #meant to be overwritten
         pass
 
+    def hide(self):
+        self.oldPosition = self.rect.center
+        self.x = -1000
+        self.y = -1000
+        self.visible = False
+        
+    def show(self):
+        self.visible = True
+        self.x = self.oldPosition[0]
+        self.y = self.oldPosition[1]
+        
 
 class SuperSprite(pygame.sprite.Sprite):
     """ An enhanced Sprite class
@@ -168,6 +185,7 @@ class SuperSprite(pygame.sprite.Sprite):
         self.boundAction = self.WRAP
         self.pressed = False
         self.oldCenter = (100, 100)
+        self.visible = True
     
     def update(self):
         self.oldCenter = self.rect.center
@@ -225,58 +243,60 @@ class SuperSprite(pygame.sprite.Sprite):
             automatically called by update()
         """
         
-        scrWidth = self.screen.get_width()
-        scrHeight = self.screen.get_height()
-        
-        #create variables to simplify checking
-        offRight = offLeft = offTop = offBottom = offScreen = False
-        
-        if self.x > scrWidth:
-            offRight = True
-        if self.x < 0:
-            offLeft = True
-        if self.y > scrHeight:
-            offBottom = True
-        if self.y < 0:
-            offTop = True
+        # ignore boundaries if we are hidden
+        if self.visible:
+            scrWidth = self.screen.get_width()
+            scrHeight = self.screen.get_height()
             
-        if offRight or offLeft or offTop or offBottom:
-            offScreen = True
-        
-        if self.boundAction == self.WRAP:
-            if offRight:
-                self.x = 0
-            if offLeft:
-                self.x = scrWidth
-            if offBottom:
-                self.y = 0
-            if offTop:
-                self.y = scrHeight
-        
-        elif self.boundAction == self.BOUNCE:
-            if offLeft or offRight:
-                self.dx *= -1
-            if offTop or offBottom:
-                self.dy *= -1
+            #create variables to simplify checking
+            offRight = offLeft = offTop = offBottom = offScreen = False
+            
+            if self.x > scrWidth:
+                offRight = True
+            if self.x < 0:
+                offLeft = True
+            if self.y > scrHeight:
+                offBottom = True
+            if self.y < 0:
+                offTop = True
                 
-            self.updateVector()
-            #self.rotation = self.dir
-        
-        elif self.boundAction == self.STOP:
-            if offScreen:
-                self.speed = 0
-        
-        elif self.boundAction == self.HIDE:
-            if offScreen:
-                self.speed = 0
-                self.setPosition((-1000, -1000))
-        
-        elif self.boundAction == self.CONTINUE:
-            pass
+            if offRight or offLeft or offTop or offBottom:
+                offScreen = True
             
-        else:
-            # assume it's CONTINUE - keep going forever
-            pass    
+            if self.boundAction == self.WRAP:
+                if offRight:
+                    self.x = 0
+                if offLeft:
+                    self.x = scrWidth
+                if offBottom:
+                    self.y = 0
+                if offTop:
+                    self.y = scrHeight
+            
+            elif self.boundAction == self.BOUNCE:
+                if offLeft or offRight:
+                    self.dx *= -1
+                if offTop or offBottom:
+                    self.dy *= -1
+                    
+                self.updateVector()
+                #self.rotation = self.dir
+            
+            elif self.boundAction == self.STOP:
+                if offScreen:
+                    self.speed = 0
+            
+            elif self.boundAction == self.HIDE:
+                if offScreen:
+                    self.speed = 0
+                    self.setPosition((-1000, -1000))
+            
+            elif self.boundAction == self.CONTINUE:
+                pass
+                
+            else:
+                # assume it's CONTINUE - keep going forever
+                pass    
     
     def setSpeed(self, speed):
         """ immediately sets the objects speed to the 
@@ -494,10 +514,13 @@ class SuperSprite(pygame.sprite.Sprite):
         """ boolean function. Returns True if the sprite
             is currently colliding with the target sprite,
             False otherwise
+            Does not count collision if either sprite is hidden
         """
         collision = False
-        if self.rect.colliderect(target.rect):
-            collision = True
+        if self.visible:
+            if target.visible:
+                if self.rect.colliderect(target.rect):
+                    collision = True
         return collision
     
     def collidesGroup(self, target):
@@ -505,9 +528,16 @@ class SuperSprite(pygame.sprite.Sprite):
             simplifies checking sprite - group collisions
             returns result of collision check (sprite from group 
             that was hit or None)
+            Does not count collision if either sprite is hidden
+            
         """
-        collision = pygame.sprite.spritecollideany(self, target)
-        return collision
+        if self.visible:
+            collision = pygame.sprite.spritecollideany(self, target)
+            if collision:
+                if collision.visible:
+                    return collision
+                else:
+                    return None
         
     def distanceTo(self, point):
         """ returns distance to any point in pixels
@@ -550,7 +580,16 @@ class SuperSprite(pygame.sprite.Sprite):
         
     def changeYby(self, value):
         self.y += value
-    
+
+    def hide(self):
+        self.oldPosition = self.rect.center
+        self.setPosition((-1000, -1000))
+        self.visible = False
+        
+    def show(self):
+        self.visible = True
+        self.setPosition(self.oldPosition)
+
 class Scene(object):
     """ encapsulates the IDEA / ALTER framework
         properties:
@@ -729,6 +768,45 @@ class Button(Label):
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     self.clicked = True
 
+class TxtInput(Button):
+    """ Simple text input 
+        Click on input to get to edit mode
+        will switch background to activeColor
+        delete to clear box, backspace to back up
+        text will be available as a property.
+        Note readkeys needs an event object
+        so it must be called from scene's 
+        doEvents() method
+    """
+    
+    def __init__(self):
+        super().__init__()
+        self.takingInput = False
+        self.activeColor = pygame.Color("yellow")
+        self.standardColor = self.bgColor
+        
+    def readKeys(self, event):
+        
+        if self.takingInput:
+            self.bgColor = pygame.Color("yellow")
+        else:
+            self.bgColor = self.standardColor
+        
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.takingInput = not self.takingInput
+            else:
+                self.takingInput = False
+
+        if event.type == pygame.KEYDOWN:
+            if self.takingInput:
+                if event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                elif event.key == pygame.K_DELETE:
+                    self.text = ""
+                else:
+                    self.text += event.unicode
+
 class Scroller(Button):
     """ like a button, but has a numeric value that 
         can be decremented by clicking on left half
@@ -848,13 +926,71 @@ class Sound(object):
   def play(self):
     self.sound.play()
 
+class Game(Scene):
+    
+    """ used only for testing purposes. not a formal part of simpleGE """
+    def __init__(self):
+        super().__init__()
+        self.red = SuperSprite(self)
+        self.red.imageMaster = pygame.Surface((50, 50))
+        self.red.imageMaster.fill(pygame.Color("red"))
+        self.red.setPosition((320, 240))
+        
+        self.blue = SuperSprite(self)
+        self.blue.imageMaster = pygame.Surface((50, 50))
+        self.blue.imageMaster.fill(pygame.Color("blue"))
+        self.blue.setPosition((220, 240))
+ 
+        self.sprites = [self.red]
+        
+        self.blueGroup = self.makeSpriteGroup([self.blue])
+        self.addGroup(self.blueGroup)
+        
+    def update(self):
+        
+        #control blue with keys
+        if self.isKeyPressed(pygame.K_LEFT):
+            self.blue.x -= 5
+        if self.isKeyPressed(pygame.K_RIGHT):
+            self.blue.x += 5
 
+        """
+        if self.red.collidesWith(self.blue):
+            self.setCaption("Collision!")
+        else:
+            self.setCaption("No collision.")
+        """
+        
+        collider = self.red.collidesGroup(self.blueGroup)
+        if collider:
+            self.setCaption("Group collision")
+        else:
+            self.setCaption("No group collision")
+     
+    def doEvents(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_b:
+                if self.blue.visible:
+                    self.blue.hide()
+                else:
+                    self.blue.show()
+                    
+            if event.key == pygame.K_r:
+                if self.red.visible:
+                    self.red.hide()
+                else:
+                    self.red.show()
+                
+    
 if __name__ == "__main__":
     # change this code to test various features of the engine
     # This code will not run when gameEngine is run as a module
-    # (as it usually will be
-
-            
+    # (as it usually will be)
+        
+    game = Game()
+    game.start()
+    
+    """            
     game = Scene()
     thing = SuperSprite(game)
     thing.setSpeed(5)
@@ -866,3 +1002,4 @@ if __name__ == "__main__":
     game.start()
 
     pygame.quit()
+    """

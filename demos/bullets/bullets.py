@@ -17,8 +17,6 @@ class Bullet(simpleGE.SuperSprite):
         self.setMoveAngle(self.parent.rotation)
         self.setSpeed(20)
         
-        
-        
 class Ship(space.Ship):
     def __init__(self, scene):
         super().__init__(scene)

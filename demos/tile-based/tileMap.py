@@ -11,10 +11,12 @@ class Tile(simpleGE.SuperSprite):
             pygame.image.load("dirt.png"),
             pygame.image.load("water.png")]
         
+        self.setSize(32, 32)
         self.GRASS = 0
         self.DIRT = 1
         self.WATER = 2
         self.state = self.GRASS
+    
         
     def setState(self, state):
         self.state = state

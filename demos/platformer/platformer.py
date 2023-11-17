@@ -26,16 +26,15 @@ class Charlie(simpleGE.SuperSprite):
             
         if self.scene.isKeyPressed(pygame.K_UP):
             if not self.inAir:
-                self.y -= 10
-                self.addForce(5, 90)
+                #self.y -= 10
+                self.addForce(6, 90)
                 self.inAir = True
                 
         platform = self.collidesGroup(self.scene.platformGroup)
         if platform:
             if self.dy > 0:
-                divot = platform.rect.top - self.rect.bottom
-                #print (f"down divot: {divot}")
-                self.changeYby(divot + 1)
+                overlap = platform.rect.top - self.rect.bottom
+                self.changeYby(overlap + 1)
                 self.setDY(0)
                 self.inAir = False
         else:

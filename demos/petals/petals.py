@@ -18,7 +18,7 @@ class Game(simpleGE.Scene):
         
         self.sndRoll = simpleGE.Sound("diceRoll.wav")
         pygame.mixer.music.load("bgm.mp3")
-        pygame.mixer.music.set_volume(.3)
+        pygame.mixer.music.set_volume(.1)
         pygame.mixer.music.play(-1)
         
         self.dice = []

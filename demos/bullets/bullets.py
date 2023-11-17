@@ -20,14 +20,23 @@ class Bullet(simpleGE.SuperSprite):
 class Ship(space.Ship):
     def __init__(self, scene):
         super().__init__(scene)
-
+        
+    def checkEvents(self):
+        super().checkEvents()
+        """ press b key for a stream of bullets """
+        if self.scene.isKeyPressed(pygame.K_b):
+            self.scene.currentBullet += 1
+            if self.scene.currentBullet >= self.scene.NUM_BULLETS:
+                self.scene.currentBullet = 0
+            self.scene.bullets[self.scene.currentBullet].fire()
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
+        self.setCaption("arrows to control, space for bullet, b for bullet stream")
         self.ship = Ship(self)
         self.NUM_BULLETS = 100
-        self.currentBullet = 0          
+        self.currentBullet = 0       
         self.bullets = []
         for i in range(self.NUM_BULLETS):
             self.bullets.append(Bullet(self, self.ship))

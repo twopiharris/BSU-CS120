@@ -8,8 +8,7 @@ class Charlie(simpleGE.SuperSprite):
         super().__init__(scene)
         self.setImage("Charlie.png")
         self.setSize(50, 50)
-        self.setPosition((100, 100))
-        
+        self.setPosition((100, 100))        
     
     def checkEvents(self):
         self.addForce(.1, 270)

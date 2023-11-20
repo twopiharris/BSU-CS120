@@ -2,6 +2,8 @@ import pygame, simpleGE
 
 """ hotspot.py
     demonstrates hot spots on a point and click map
+    map: https://opengameart.org/content/simple-map-tiles
+    
 """
 
 class HotSpot(simpleGE.BasicSprite):
@@ -57,12 +59,12 @@ class Game(simpleGE.Scene):
         self.hsVolcano = HotSpot(self)
         self.hsVolcano.setSize(110, 100)
         self.hsVolcano.setPosition((120, 80))
-        self.hsVolcano.transparent = True
+        #self.hsVolcano.transparent = True
 
         self.hsTree = HotSpot(self)
         self.hsTree.setPosition((400, 200))
         self.hsTree.setSize(100, 130)
-        self.hsTree.transparent = True
+        #self.hsTree.transparent = True
         
         self.lblOutput = simpleGE.Label()
         self.lblOutput.center = ((320, 400))

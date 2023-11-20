@@ -1,9 +1,12 @@
 import pygame, simpleGE
 
 """ tileScroll.py
-    demonstrate basic tbw """
+    demonstrate basic tbw 
+    tile images from lpc Atlas - openGameArt
+    http://opengameart.org/content/lpc-tile-atlas
+"""
     
-class Tile(simpleGE.SuperSprite):
+class Tile(simpleGE.BasicSprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.images = [
@@ -17,10 +20,9 @@ class Tile(simpleGE.SuperSprite):
         self.WATER = 2
         self.state = self.GRASS
     
-        
     def setState(self, state):
         self.state = state
-        self.imageMaster = self.images[state]
+        self.image = self.images[state]
 
 
 class Game(simpleGE.Scene):
@@ -68,15 +70,15 @@ class Game(simpleGE.Scene):
           [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2]
       ]
     
-      for row in range(self.ROWS):
+      for row in range(self.SCREEN_ROWS):
           self.tileset.append([])
-          for col in range(self.COLS):
-            currentVal = self.map[row][col]
+          for col in range(self.SCREEN_COLS):
             newTile = Tile(self)
             newTile.setState(0)
             xPos = 16 + (32 * col)
             yPos = 16 + (32 * row)
-            newTile.setPosition((xPos, yPos))
+            newTile.x = xPos
+            newTile.y = yPos
             self.tileset[row].append(newTile)
             
     def showMap(self):

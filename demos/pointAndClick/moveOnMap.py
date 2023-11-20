@@ -2,6 +2,9 @@ import pygame, simpleGE
 
 """ point and click
     various techniques for point and click
+    
+    pirate ship: https://opengameart.org/content/old-fashioned-pirate-ship
+    map: https://opengameart.org/content/simple-map-tiles
     """
     
     
@@ -24,18 +27,24 @@ class Game(simpleGE.Scene):
         self.sprites = [self.ship]
         
     def doEvents(self, event):
+        # find direction from mouse position
+        mousePos = pygame.mouse.get_pos()
+        dir = self.ship.dirTo(mousePos)
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mousePos = pygame.mouse.get_pos()
-            dir = self.ship.dirTo(mousePos)
-            dist = self.ship.distanceTo(mousePos)
-            if dist > 20:
-                self.ship.setMoveAngle(dir)
-                self.ship.setSpeed(3)
-            else:
-                self.ship.setSpeed(0)
+            self.ship.setMoveAngle(dir)
+            self.ship.setSpeed(3)
         else:
+                self.ship.setSpeed(0)
+                
+    def update(self):
+        # move until close to mouse position
+        mousePos = pygame.mouse.get_pos()
+        dist = self.ship.distanceTo(mousePos)
+        if dist < 5:
             self.ship.setSpeed(0)
+        
             
+
         
 def main():
     game = Game()

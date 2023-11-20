@@ -49,10 +49,10 @@ class Game(simpleGE.Scene):
         # move until close to mouse position
         mousePos = pygame.mouse.get_pos()
         dist = self.ship.distanceTo(mousePos)
-        dir = self.ship.dirTo(mousePos)
+        mouseDir = self.ship.dirTo(mousePos)
         
         if pygame.mouse.get_pressed() == (1, 0, 0):
-            self.ship.setMoveAngle(dir)
+            self.ship.setMoveAngle(mouseDir)
             self.ship.setSpeed(3)
         else:
             self.ship.setSpeed(0)

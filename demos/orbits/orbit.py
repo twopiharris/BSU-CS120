@@ -41,7 +41,13 @@ class Planet(simpleGE.SuperSprite):
         self.y = 240
         
     def gravitate(self, body):
+        distance = self.distanceTo(self.scene.ship.rect.center)
+        force = (body.mass * self.mass)/distance **2
+        direction = self.scene.ship.dirTo(self.rect.center)
+        self.scene.ship.addForce(force, direction)
+        
 
+        """
         thetaX = self.x - body.x
         thetaY = self.y - body.y
         distance = math.sqrt((thetaX ** 2) + (thetaY ** 2))
@@ -57,7 +63,8 @@ class Planet(simpleGE.SuperSprite):
         body.dx += thetaX
         body.dy += thetaY
         body.updateVector()
- 
+        """
+    
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()

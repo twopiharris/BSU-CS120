@@ -28,6 +28,7 @@ class HotSpot(simpleGE.BasicSprite):
 
         #check for mouse input
         if pygame.mouse.get_pressed() == (1, 0, 0):
+            print(f"mouse pos: {pygame.mouse.get_pos()}")
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.active = True
 
@@ -54,17 +55,17 @@ class Game(simpleGE.Scene):
         super().__init__()
         self.background = pygame.image.load("example_map.png")
         self.background = pygame.transform.scale(self.background, (640, 480))
-        self.setCaption("Find the hot spots")
+        self.setCaption("Find the hot spots - space to toggle hotspot visibility")
         
         self.hsVolcano = HotSpot(self)
         self.hsVolcano.setSize(110, 100)
         self.hsVolcano.setPosition((120, 80))
-        #self.hsVolcano.transparent = True
+        self.hsVolcano.transparent = True
 
         self.hsTree = HotSpot(self)
         self.hsTree.setPosition((400, 200))
         self.hsTree.setSize(100, 130)
-        #self.hsTree.transparent = True
+        self.hsTree.transparent = True
         
         self.lblOutput = simpleGE.Label()
         self.lblOutput.center = ((320, 400))
@@ -84,6 +85,13 @@ class Game(simpleGE.Scene):
             
         if self.hsTree.clicked:
             print("You clicked on the tree")
+            
+    def doEvents(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                self.hsTree.transparent = not self.hsTree.transparent
+                self.hsVolcano.transparent = not self.hsVolcano.transparent
+
         
 def main():
     game = Game()

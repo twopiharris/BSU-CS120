@@ -1,9 +1,12 @@
 import pygame, simpleGE
 
 """ tileMap.py
-    demonstrate basic tbw """
+    demonstrate basic tbw 
+    tile images from lpc Atlas - openGameArt
+    http://opengameart.org/content/lpc-tile-atlas
+    """
     
-class Tile(simpleGE.SuperSprite):
+class Tile(simpleGE.BasicSprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.images = [
@@ -16,16 +19,42 @@ class Tile(simpleGE.SuperSprite):
         self.DIRT = 1
         self.WATER = 2
         self.state = self.GRASS
-    
+        self.clicked = False
+        self.active = False
         
     def setState(self, state):
         self.state = state
-        self.imageMaster = self.images[state]
+        self.image = self.images[state]
+        
+    def checkClick(self):
+        #check for clicked and active                
+        
+        self.clicked = False
 
+        #check for mouse input
+        if pygame.mouse.get_pressed() == (1, 0, 0):
+            if self.rect.collidepoint(pygame.mouse.get_pos()):
+                self.active = True
 
+        #check for mouse release
+        if self.active == True:
+            if pygame.mouse.get_pressed() == (0, 0, 0):
+                self.active = False
+                if self.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.clicked = True
+
+    def checkEvents(self):
+        self.checkClick()
+        if self.clicked:
+            newState = self.state + 1
+            if newState > 2:
+                newState = 0
+            self.setState(newState)         
+            
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
+        self.setCaption("Click on a tile to edit")
         self.tileset = []
         
         self.ROWS = 15
@@ -63,9 +92,8 @@ class Game(simpleGE.Scene):
             newTile.setState(currentVal)
             xPos = 16 + (32 * col)
             yPos = 16 + (32 * row)
-            newTile.setPosition((xPos, yPos))
-            #newTile.x = xPos
-            #newTile.y = yPos
+            newTile.x = xPos
+            newTile.y = yPos
             self.tileset[row].append(newTile)
                 
 def main():

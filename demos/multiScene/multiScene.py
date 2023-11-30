@@ -11,7 +11,8 @@ class Scene1(simpleGE.Scene):
         self.next = ""
         self.lblOutput = simpleGE.Label()
         self.lblOutput.center = ((320, 240))
-        self.lblOutput.text = "Scene 1"
+        self.lblOutput.size = ((300, 30))
+        self.lblOutput.text = "Scene 1 can allow for choice"
         
         self.btn2 = simpleGE.Button()
         self.btn2.center = ((220, 340))
@@ -38,7 +39,8 @@ class Scene2(simpleGE.Scene):
         super().__init__()
         self.lblOutput = simpleGE.Label()
         self.lblOutput.center = ((320, 240))
-        self.lblOutput.text = "Scene 2"
+        self.lblOutput.size = ((300, 30))
+        self.lblOutput.text = "Scene 2 quits when done"
         
         self.btnQuit = simpleGE.Button()
         self.btnQuit.center = ((320, 340))

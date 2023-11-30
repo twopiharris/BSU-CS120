@@ -714,11 +714,16 @@ class Label(pygame.sprite.Sprite):
         self.bgColor = ((0xFF, 0xFF, 0xFF))
         self.center = (100, 100)
         self.size = (150, 30)
+        self.transparentBackground = False
 
     def update(self):
         self.checkEvents()
         self.image = pygame.Surface(self.size)
         self.image.fill(self.bgColor)
+        
+        if self.transparentBackground:
+            self.image.set_colorkey(self.bgColor)
+            
         fontSurface = self.font.render(self.text, True, self.fgColor, self.bgColor)
         #center the text
         xPos = (self.image.get_width() - fontSurface.get_width())/2

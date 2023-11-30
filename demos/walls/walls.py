@@ -32,20 +32,20 @@ class Player (simpleGE.SuperSprite):
         result = False
         # larger gap less likely to overlap
         # but will seem to 'jump' more
-        gap = 10
+        gap = 3
             
         if self.rect.colliderect(target.rect):
             result = True
             if self.dx > 0:
                 self.setDX(0)
                 self.changeXby(-(self.moveSpeed + gap))
-            if self.dx < 0:
+            elif self.dx < 0:
                 self.setDX(0)
                 self.changeXby(self.moveSpeed + gap)
-            if self.dy > 0:
+            elif self.dy > 0:
                 self.setDY(0)
                 self.changeYby(-(self.moveSpeed + gap))
-            if self.dy < 0:
+            elif self.dy < 0:
                 self.setDY(0)
                 self.changeYby(self.moveSpeed + gap)
                 

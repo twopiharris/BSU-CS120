@@ -38,9 +38,14 @@ class Scene2(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.lblOutput = simpleGE.Label()
+        
+        self.lblOutput.bgColor = ((0, 0, 0))
+        self.lblOutput.fgColor = ((255, 255, 255))
+        
         self.lblOutput.center = ((320, 240))
         self.lblOutput.size = ((300, 30))
         self.lblOutput.text = "Scene 2 quits when done"
+        self.lblOutput.transparentBackground = True
         
         self.btnQuit = simpleGE.Button()
         self.btnQuit.center = ((320, 340))
@@ -70,6 +75,7 @@ class Scene3(simpleGE.Scene):
             self.stop()     
 
 def main():
+    
     scene2 = Scene2()
     scene2.start()
     

@@ -16,7 +16,7 @@ class Player(simpleGE.SuperSprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.imageMaster = pygame.Surface((20, 20))
-        self.imageMaster.fill("blue")
+        self.imageMaster.fill("red")
         self.moveSpeed = 2
 
     def checkEvents(self):
@@ -28,6 +28,11 @@ class Player(simpleGE.SuperSprite):
             self.changeXby(-self.moveSpeed)
         if self.scene.isKeyPressed(pygame.K_RIGHT):
             self.changeXby(self.moveSpeed)
+            
+        if self.tileOver == (12, 19):
+            self.imageMaster.fill("white")
+        else:
+            self.imageMaster.fill("red")
         
 class Tile(simpleGE.BasicSprite):
     def __init__(self, scene):
@@ -78,7 +83,11 @@ class Tile(simpleGE.BasicSprite):
             
         # look for player
         if self.collidesWith(self.scene.player):
-            self.scene.lblOutput.text = self.stateName[self.state]
+            stateInfo = self.stateName[self.state]
+            self.scene.player.tileOver = self.tilePos
+            rowCol = f"{self.tilePos[0]}, {self.tilePos[1]}"
+            
+            self.scene.lblOutput.text = f"{stateInfo} {rowCol}"
             
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -122,11 +131,13 @@ class Game(simpleGE.Scene):
             currentVal = map[row][col]
             newTile = Tile(self)
             newTile.setState(currentVal)
+            newTile.tilePos = (row, col)
             xPos = 16 + (32 * col)
             yPos = 16 + (32 * row)
             newTile.x = xPos
             newTile.y = yPos
             self.tileset[row].append(newTile)
+
                 
 def main():
     game = Game()

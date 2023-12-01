@@ -16,8 +16,8 @@ class Game(simpleGE.Scene):
         
         self.lblOutput = TransparentLabel()
         self.lblOutput.center = ((320, 240))
-        self.lblOutput.bgColor = ((255, 255, 255))
-        self.lblOutput.fgColor = ((0, 0, 0))   
+        self.lblOutput.bgColor = ("papayawhip")
+        self.lblOutput.fgColor = ("black")   
         self.lblOutput.text = "Hi there."
 
         self.sprites = [self.lblOutput]      

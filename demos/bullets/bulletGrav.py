@@ -1,6 +1,7 @@
-import pygame, simpleGE, random, space
+import pygame, simpleGE
 
-""" bullet.py """
+""" bullets with gravity """
+
 
 class Bullet(simpleGE.SuperSprite):
     def __init__(self, scene, parent):
@@ -17,25 +18,32 @@ class Bullet(simpleGE.SuperSprite):
         self.setMoveAngle(self.parent.rotation)
         self.setSpeed(20)
         
+    def checkEvents(self):
+        self.addDY(.1)
         
-class Ship(space.Ship):
+class Gun(simpleGE.SuperSprite):
     def __init__(self, scene):
         super().__init__(scene)
+        self.setImage("turret.gif")
+        self.setPosition((30, 450))
+        
+    def checkEvents(self):
+        if self.scene.isKeyPressed(pygame.K_LEFT):
+            self.rotateBy(5)
+        if self.scene.isKeyPressed(pygame.K_RIGHT):
+            self.rotateBy(-5)
+        if self.scene.isKeyPressed(pygame.K_SPACE):
+            self.scene.bullet.fire()
 
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
-        self.ship = Ship(self)
-        self.bullet = Bullet(self, self.ship)
-        self.sprites = [self.ship, self.bullet]
-        
-        #self.bullets
+        self.gun = Gun(self)
+        self.bullet = Bullet(self, self.gun)
 
-    def doEvents(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                self.bullet.fire()
+        self.sprites = [self.bullet, self.gun]
+
         
 def main():
     game = Game()
@@ -43,5 +51,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-
-        

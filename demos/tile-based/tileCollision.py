@@ -33,6 +33,16 @@ class Player(simpleGE.SuperSprite):
             self.imageMaster.fill("white")
         else:
             self.imageMaster.fill("red")
+            
+        #adjust movement speed by terrain
+        if self.tileState == "0":
+            self.moveSpeed = 2
+        elif self.tileState == 1:
+            self.moveSpeed = 4
+        elif self.tileState == 2:
+            self.moveSpeed = .2
+        else:
+            self.moveSpeed = 2
         
 class Tile(simpleGE.BasicSprite):
     def __init__(self, scene):
@@ -74,6 +84,8 @@ class Tile(simpleGE.BasicSprite):
                     self.clicked = True
 
     def checkEvents(self):
+        
+        #allow editing
         self.checkClick()
         if self.clicked:
             newState = self.state + 1
@@ -85,6 +97,7 @@ class Tile(simpleGE.BasicSprite):
         if self.collidesWith(self.scene.player):
             stateInfo = self.stateName[self.state]
             self.scene.player.tileOver = self.tilePos
+            self.scene.player.tileState = self.state
             rowCol = f"{self.tilePos[0]}, {self.tilePos[1]}"
             
             self.scene.lblOutput.text = f"{stateInfo} {rowCol}"

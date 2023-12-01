@@ -1,4 +1,4 @@
-import pygame, simpleGE
+import pygame, simpleGE, math
 
 """ bullets with gravity """
 
@@ -16,10 +16,22 @@ class Bullet(simpleGE.SuperSprite):
         self.show()
         self.setPosition(self.parent.rect.center)
         self.setMoveAngle(self.parent.rotation)
-        self.setSpeed(20)
+        self.setSpeed(self.scene.scrVelocity.value)
+        self.calcVector()
         
     def checkEvents(self):
-        self.addDY(.1)
+        if self.visible:
+              self.addDY(1)
+        else:
+            self.setSpeed(0)
+            
+    def calcVector(self):
+        # vector projection was not happening correctly.
+        # will be corrected in next version of simpleGE
+        theta = self.dir / 180.0 * math.pi
+        self.dx = math.cos(theta) * self.speed
+        self.dy = math.sin(theta) * self.speed
+        self.dy *= -1        
         
 class Gun(simpleGE.SuperSprite):
     def __init__(self, scene):
@@ -32,17 +44,33 @@ class Gun(simpleGE.SuperSprite):
             self.rotateBy(5)
         if self.scene.isKeyPressed(pygame.K_RIGHT):
             self.rotateBy(-5)
+        if self.scene.isKeyPressed(pygame.K_UP):
+            scroller = self.scene.scrVelocity
+            if scroller.value < scroller.maxValue:
+                scroller.value += 1
+        if self.scene.isKeyPressed(pygame.K_DOWN):
+            scroller = self.scene.scrVelocity
+            if scroller.value > scroller.minValue:
+                scroller.value -= 1            
         if self.scene.isKeyPressed(pygame.K_SPACE):
             self.scene.bullet.fire()
 
+class ScrVelocity(simpleGE.Scroller):
+    def __init__(self):
+        super().__init__()
+        self.minValue = 0
+        self.maxValue = 30
+        self.value = 15
+        self.center = ((200, 450))
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.gun = Gun(self)
         self.bullet = Bullet(self, self.gun)
+        self.scrVelocity = ScrVelocity()
 
-        self.sprites = [self.bullet, self.gun]
+        self.sprites = [self.bullet, self.gun, self.scrVelocity]
 
         
 def main():

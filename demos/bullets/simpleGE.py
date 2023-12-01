@@ -303,6 +303,7 @@ class SuperSprite(pygame.sprite.Sprite):
             given value.
         """
         self.speed = speed
+        #self.__calcVector()
 
     def speedUp(self, amount):
         """ changes speed by the given amount

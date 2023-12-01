@@ -1,5 +1,7 @@
 """ simpleGE.py 
 
+    turn off anti-aliasing in label
+
     2.3 edition
     
     high-level tools to simplify pygame programming
@@ -306,6 +308,7 @@ class SuperSprite(pygame.sprite.Sprite):
             given value.
         """
         self.speed = speed
+        self.__calcVector()
 
     def speedUp(self, amount):
         """ changes speed by the given amount
@@ -724,7 +727,7 @@ class Label(pygame.sprite.Sprite):
         self.checkEvents()
         self.image = pygame.Surface(self.size)
         self.image.fill(self.bgColor)
-        fontSurface = self.font.render(self.text, True, self.fgColor, self.bgColor)
+        fontSurface = self.font.render(self.text, False, self.fgColor, self.bgColor)
         #center the text
         xPos = (self.image.get_width() - fontSurface.get_width())/2
         

@@ -10,7 +10,13 @@ class LblOutput(simpleGE.Label):
     def __init__(self):
         super().__init__()
         self.center = (320, 25)
-        self.text = "current tile: "        
+        self.text = "current tile: "
+        self.fgColor = "black"
+        self.bgColor = "white"
+        
+    def update(self):
+        super().update()
+        self.image.set_colorkey(self.bgColor)
     
 class Player(simpleGE.SuperSprite):
     def __init__(self, scene):

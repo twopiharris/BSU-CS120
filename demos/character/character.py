@@ -80,7 +80,7 @@ class Player(simpleGE.SuperSprite):
 
         #in this animation, cell 0 is idle, so start at 1
         self.walkAnim.startCol = 1
-        self.animRow = 0
+        self.animRow = 2
         self.moveSpeed = 2
         
     def checkEvents(self):

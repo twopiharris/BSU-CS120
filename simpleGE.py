@@ -19,6 +19,25 @@
     add TxtInput object
     add show and hide methods to BasicSprite, SuperSprite
     
+    
+    TODO: 
+    
+    Add transparency to labels and other gui elements (easy)
+    Add animation object with offset to library(easy)
+    Solid collision management (hard)
+    setSpeed calls __calcVector in Scene (easy)
+    combine BasicSprite and SuperSprite into single sprite object (hard)
+        Consistent methods or attributes for mouseOver, mouseClicked, mouseReleased
+        Change to imageAngle, moveAngle, angle
+        parameters for speed, angles, dx, dy, x, y
+    Add size parameter to Scene (easy)
+    improve behavior of checkbounds (easy)
+    add keyJustPressed attribute to Scene for instant key presses (easy)
+    take position out of show() method for labels
+    add simple chroma (top left is chroma key) to sprite (easy)
+    clarify update, doEvents, checkEvents (will require refactoring)
+    
+    
 """
 
 import pygame, math, time

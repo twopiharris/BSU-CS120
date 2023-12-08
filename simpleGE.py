@@ -36,13 +36,131 @@
     take position out of show() method for labels
     add simple chroma (top left is chroma key) to sprite (easy)
     clarify update, doEvents, checkEvents (will require refactoring)
-    
-    
+    Add an option for ColorRect for sprite
 """
 
 import pygame, math, time
 pygame.init()
 pygame.mixer.init()
+
+
+class Sprite(pygame.sprite.Sprite):
+    """ 
+        new more sensible Sprite class to rule them all 
+    """
+    def __init__(self, scene):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.scene = scene
+        self.screen = scene.screen
+
+        self.image = pygame.Surface((25, 25))
+        self.image.fill((255, 0, 0))
+        self.rect = self.image.get_rect()
+        self.x = 100
+        self.y = 100
+        self.dx = 0
+        self.dy = 0
+        self.visible = True
+
+    @property 
+    def x(self):
+        return self.__x
+    
+    @x.setter 
+    def x(self, value):
+        self.__x = value
+        self.rect.centerx = self.__x
+
+    @property 
+    def y(self):
+        return self.__y
+    
+    @y.setter 
+    def y(self, value):
+        self.__y = value
+        self.rect.centery = self.__y
+
+    @property 
+    def dx(self):
+        return self.__dx
+    
+    @dx.setter 
+    def dx(self, value):
+        self.__dx = value
+
+    @property 
+    def dy(self):
+        return self.__dy
+    
+    @dy.setter 
+    def dy(self, value):
+        self.__dy = value
+
+
+    def update(self):
+        self.x += self.dx
+        self.y += self.dy
+        self.checkBounds()
+        self.rect.center = (self.x, self.y)
+        self.checkEvents()
+        
+    def checkBounds(self):
+        scrWidth = self.screen.get_width()
+        scrHeight = self.screen.get_height()
+        if self.visible:
+            if self.x > scrWidth:
+                self.x = 0
+            if self.x < 0:
+                self.x = scrWidth
+            if self.y > scrHeight:
+                self.y = 0
+            if self.y < 0:
+                self.y = scrHeight
+            
+    def setSize(self, newX, newY):
+        self.image = pygame.transform.scale(self.image, (newX, newY))
+        self.rect = self.image.get_rect()
+        
+    def setImage (self, imageFile):
+        """ loads the given file name as the master image
+            default setting should be facing east.  Image
+            will be rotated automatically """
+        self.image = pygame.image.load(imageFile)
+        if imageFile.endswith(".png"):
+          self.image = self.image.convert_alpha()
+        else:
+          self.image = self.image.convert()
+        self.rect = self.image.get_rect()
+          
+    def collidesWith(self, target):
+        """ boolean function. Returns True if the sprite
+            is currently colliding with the target sprite,
+            False otherwise
+        """
+        collision = False
+        if self.visible:
+            if target.visible:
+                if self.rect.colliderect(target.rect):
+                    collision = True
+        return collision
+
+    def checkEvents(self):
+        #meant to be overwritten
+        pass
+
+    def hide(self):
+        self.oldPosition = self.rect.center
+        self.x = -1000
+        self.y = -1000
+        self.visible = False
+        
+    def show(self):
+        self.visible = True
+        self.x = self.oldPosition[0]
+        self.y = self.oldPosition[1]
+       
+
 
 class BasicSprite(pygame.sprite.Sprite):
     """ use this sprite when you want to 
@@ -642,15 +760,18 @@ class Scene(object):
         """ sets up the sprite groups
             begins the main loop
         """
+        
         self.mainSprites = pygame.sprite.OrderedUpdates(self.sprites)
         self.groups.append(self.mainSprites)
         
         self.screen.blit(self.background, (0, 0))
         self.clock = pygame.time.Clock()
         self.keepGoing = True
+        self.keyJustPressed = None
         while self.keepGoing:
             self.__mainLoop()
         pygame.quit()
+
 
     def stop(self):
         """stops the loop"""
@@ -664,6 +785,14 @@ class Scene(object):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.keepGoing = False
+                
+            # manage instant key presses
+            if event.type == pygame.KEYDOWN:
+                if self.keyJustPressed == None:
+                    self.keyJustPressed = event.key
+            if event.type == pygame.KEYUP:
+                self.keyJustPressed = None
+                
             self.doEvents(event)
         
         self.update()
@@ -973,6 +1102,12 @@ class Game(Scene):
         if self.isKeyPressed(pygame.K_RIGHT):
             self.blue.x += 5
 
+        if self.keyJustPressed == pygame.K_a:
+            self.red.x -= 5
+        if self.keyJustPressed == pygame.K_d:
+            self.red.x += 5
+            
+            
         """
         if self.red.collidesWith(self.blue):
             self.setCaption("Collision!")

@@ -786,13 +786,6 @@ class Scene(object):
             if event.type == pygame.QUIT:
                 self.keepGoing = False
                 
-            # manage instant key presses
-            if event.type == pygame.KEYDOWN:
-                if self.keyJustPressed == None:
-                    self.keyJustPressed = event.key
-            if event.type == pygame.KEYUP:
-                self.keyJustPressed = None
-                
             self.doEvents(event)
         
         self.update()
@@ -1095,10 +1088,9 @@ class Game(Scene):
         self.addGroup(self.blueGroup)
         
     def update(self):
-        
-        #control blue with keys
+      #control blue with keys
         if self.isKeyPressed(pygame.K_LEFT):
-            self.blue.x -= 5
+            self.blue.x -= 5            
         if self.isKeyPressed(pygame.K_RIGHT):
             self.blue.x += 5
 

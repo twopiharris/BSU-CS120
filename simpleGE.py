@@ -55,7 +55,9 @@ class Sprite(pygame.sprite.Sprite):
         self.screen = scene.screen
 
         self.image = pygame.Surface((25, 25))
-        self.image.fill((255, 0, 0))
+        self.image.convert_alpha()
+        self.image.fill((255, 255, 0))
+        self.image.set_alpha(100)
         self.rect = self.image.get_rect()
         self.x = 100
         self.y = 100
@@ -118,9 +120,19 @@ class Sprite(pygame.sprite.Sprite):
             if self.y < 0:
                 self.y = scrHeight
             
+    def setColorRect(self, color, size):
+        #sets the image to a rectangle of the specified color and size
+        self.image = pygame.Surface(size)
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        
     def setSize(self, newX, newY):
         self.image = pygame.transform.scale(self.image, (newX, newY))
         self.rect = self.image.get_rect()
+        
+    def setPosition(self, x, y):
+        self.x = x
+        self.y = y
         
     def setImage (self, imageFile):
         """ loads the given file name as the master image
@@ -174,7 +186,7 @@ class BasicSprite(pygame.sprite.Sprite):
         self.screen = scene.screen
 
         self.image = pygame.Surface((25, 25))
-        self.image.fill((255, 0, 0))
+        self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.x = 100
         self.y = 100
@@ -1072,6 +1084,8 @@ class Game(Scene):
     """ used only for testing purposes. not a formal part of simpleGE """
     def __init__(self):
         super().__init__()
+        self.practiceSprite = Sprite(self)
+        self.practiceSprite.setPosition(20, 20)
         self.red = SuperSprite(self)
         self.red.imageMaster = pygame.Surface((50, 50))
         self.red.imageMaster.fill(pygame.Color("red"))
@@ -1082,7 +1096,7 @@ class Game(Scene):
         self.blue.imageMaster.fill(pygame.Color("blue"))
         self.blue.setPosition((220, 240))
  
-        self.sprites = [self.red]
+        self.sprites = [self.red, self.practiceSprite]
         
         self.blueGroup = self.makeSpriteGroup([self.blue])
         self.addGroup(self.blueGroup)

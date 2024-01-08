@@ -19,9 +19,9 @@ def main():
         if result == "0":
             keepGoing = False
         elif result == "1":
-            fileName = "CS120_1.txt"
+            fileName = "CS120_2_s24.txt"
         elif result == "2":
-            fileName = "CS120_4.txt"
+            fileName = "CS120_3_s24.txt"
 
         if keepGoing:
             studentList = makeList(fileName)
@@ -57,8 +57,8 @@ def menu():
         print("""
 
         0) quit
-        1) 8:00 session
-        2) 11:00 session
+        1) 9:00 session
+        2) 10:00 session
         """)
 
         result = input("Your choice: ")
@@ -79,6 +79,7 @@ def makeList(fileName):
 
     inFile = open(fileName, "r")
     for line in inFile:
+        line = line.replace('"', '')
         studentList.append(line.strip())
 
     print(f"Number of students: {len(studentList)}")

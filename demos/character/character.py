@@ -9,7 +9,7 @@ import simpleGE, pygame
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
-        self.background.fill("papayawhip")
+        self.background.fill(pygame.Color("papayawhip"))
         self.setCaption("Arrows to move player around screen")
         self.player = Player(self)
         

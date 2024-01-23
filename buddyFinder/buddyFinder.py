@@ -103,6 +103,7 @@ def makePairs(studentList):
         if len(studentList) == 1:
             student1 = studentList[0]
             student2 = "NULL"
+            pairList.append((student1, student2))
             keepGoing = False
         elif len(studentList) <= 0:
             keepGoing = False
@@ -115,7 +116,7 @@ def makePairs(studentList):
             #print(f"s2: {student2}")
             studentList.remove(student2)
 
-        pairList.append((student1, student2))
+            pairList.append((student1, student2))
 
     return pairList
 

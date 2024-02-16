@@ -1100,8 +1100,7 @@ class Scene(object):
             if event.type == pygame.QUIT:
                 self.keepGoing = False
             self.doEvents(event)
-            self.processEvent(event)
-            
+        
         self.update()
         self.process()
         for group in self.groups:
@@ -1140,7 +1139,7 @@ class Scene(object):
         """
             doEvents, renamed for consistency 
         """
-        pass
+        self.doEvents(event)
         
     def update(self):
         """ happens once per frame, after event parsing.

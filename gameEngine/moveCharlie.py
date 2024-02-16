@@ -6,14 +6,13 @@ class MyScene(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.background.fill("papayawhip")
-        self.setCaption("Using doEvents in extended scene")
-        self.charlie = simpleGE.BasicSprite(self)
+        self.setCaption("working with events")
+        self.charlie = simpleGE.Sprite(self)
         self.charlie.setImage("Charlie.png")
         self.charlie.setSize(50, 50)
         self.sprites = [self.charlie]
 
-        
-    def doEvents(self, event):
+    def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.charlie.x -= 5

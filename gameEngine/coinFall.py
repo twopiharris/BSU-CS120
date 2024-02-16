@@ -1,6 +1,6 @@
 import pygame, simpleGE, random
 
-class Coin(simpleGE.BasicSprite):
+class Coin(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Coin.png")
@@ -13,7 +13,7 @@ class Coin(simpleGE.BasicSprite):
         self.y = 10
         self.fallSpeed = random.randint(5,10)
         
-    def checkEvents(self):
+    def process(self):
         self.y += self.fallSpeed
        
     def checkBounds(self):

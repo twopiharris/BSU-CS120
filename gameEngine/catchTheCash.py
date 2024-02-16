@@ -23,17 +23,18 @@ class Game(simpleGE.Scene):
         self.lblTime.center = (550, 50)
 
         self.timer = simpleGE.Timer()
+        self.timer.totalTime = 30
 
         self.sprites = [self.lblScore, self.lblTime, self.charlie, self.coins]
 
     def update(self):
-        timeLeft = 30 - self.timer.getElapsedTime()
+        timeLeft = self.timer.getTimeLeft()
         if timeLeft < 0:
             self.stop()
         self.lblTime.text = f"Time left: {timeLeft:.2f}"
         self.lblScore.text = f"score: {self.score}"
 
-class Charlie(simpleGE.BasicSprite):
+class Charlie(simpleGE.Sprite):
     """ moves on bottom of screen with arrows """
     def __init__(self, scene):
         super().__init__(scene)
@@ -42,13 +43,13 @@ class Charlie(simpleGE.BasicSprite):
         self.moveSpeed = 5
         self.y = 400
 
-    def checkEvents(self):
-        if self.scene.isKeyPressed(pygame.K_LEFT):
+    def process(self):
+        if self.isKeyPressed(pygame.K_LEFT):
             self.x -= self.moveSpeed
-        if self.scene.isKeyPressed(pygame.K_RIGHT):
+        if self.isKeyPressed(pygame.K_RIGHT):
             self.x += self.moveSpeed
             
-class Coin(simpleGE.BasicSprite):
+class Coin(simpleGE.Sprite):
     """ falls from top of screen at random speed
        when reset appears at new speed and position
        at top of screen """
@@ -65,7 +66,7 @@ class Coin(simpleGE.BasicSprite):
         self.y = 10
         self.dy = random.randint(5,10)
         
-    def checkEvents(self):
+    def process(self):
         if self.collidesWith(self.scene.charlie):
             self.scene.score += 1
             self.coinSound.play()

@@ -6,7 +6,7 @@ def main():
 
     for line in file:
       line = line.strip()
-      print ("we need {}, dude".format(line))
+      print (f"we need {line}, dude")
 
     file.close()
 

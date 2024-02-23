@@ -7,62 +7,87 @@ class Scene {
   __init__()
   start()
   stop()
-  makeSpriteGroup(sprites)
-  addSpriteGroup(group)
+  process()
+  processEvent(event)
+
+  setImage(imageFile, autoSize = True)
   setCaption(title)
-  doEvents(event)
-  update()
+  isKeyPressed(key)Bool
+  update()[Deprecated]
+  doEvents(event)[Deprecated]
+  makeSpriteGroup(sprites)[Deprecated]
+  addSpriteGroup(group)[Deprecated]
 }
 
+
+class PygameSprite {
+   pygame Sprite object
+}
 
 class Sprite {
-    pygame Sprite object
-}
+    Surface image 
+    Rect rect
+    int x
+    int y
+    int left
+    int right
+    int top
+    int bottom
+    tuple position
+    int dx
+    int dy
+    int moveAngle
+    float speed
+    int imageAngle
+    Bool visible
+    Bool mouseOver
+    Bool mouseDown
+    Bool clicked
+    int WRAP
+    int BOUNCE
+    int STOP 
+    int HIDE 
+    int CONTINUE 
+    int screenWidth 
+    int screenHeight 
 
-class SuperSprite {
     __init__(scene)
-    setImage(image)
+    setImage(imageFile)
+    copyImage(imageSurface)
     setSize(x, y)
-    setPosition(x, y)
-    setSpeed(speed)
-    speedUp(amount)
-    setAngle(dir)
-    setImageAngle(angle)
-    setMoveAngle(angle)
-    setDX(dx)
-    setDY(dy)
-    addDX(ddx)
-    addDY(ddy)
-    setComponents((dx, dy))
-    moveBy((dx, dy))
-    addForce(amt, angle)
-    forward(amt)
-    rotateBy(amt)
+    colorRect(color, size)
+    hide()
+    show()
+    drawTrace(color)
+    setAngle(angle)
+    turnBy(angle)
+    forward(distance)
+    addForce(amount, angle)
+    process()
     setBoundAction(action)
-    setSpeedLimits(max, min)
-    mouseDown()
-    clicked()
-    collidesWith(target)
-    collidesGroup(group)
-    distanceTo(x, y)
-    dirTo(x, y)
-    dataTrace()
-    checkEvents()
     checkBounds()
+    collidesWith(sprite)
+    distanceTo(point)
+    dirTo(point)
+    isKeyPressed(key)
 }
 
-SuperSprite --|> Sprite
+Sprite --|> PygameSprite
 
 class Label {
-    Font font
-    string text
-    color fgColor
-    color bgColor
-    coord center
-    coord size
+    Font font 
+    Str text 
+    Color fgColor
+    Color bgColor 
+    coords center 
+    coords size
+
+    process()
+    hide() 
+    show()
 }
 
-Label --|> Sprite
+Label --|> PygameSprite
 
 class Button {
     bool active
@@ -70,6 +95,12 @@ class Button {
 }
 
 Button --|> Label
+
+class TxtInput {
+    readKeys(event)
+}
+
+TxtInput --|> Button
 
 class Scroller {
     int value
@@ -87,7 +118,49 @@ class MultiLabel {
     color bgColor
     coords center
     coords size
+    Bool active
+    Bool clicked 
+    show()
+    hide()
 }
 
-MultiLabel --|> Sprite
+MultiLabel --|> PygameSprite
 
+class Timer {
+    float totalTime
+    start()
+    getElapsedTime()
+    getTimeLeft()
+}
+
+class Sound {
+    __init__(soundFileName)
+    play()
+}
+
+class SpriteSheet {
+    Str imageFile
+    coords cellSize
+    int numRows 
+    int numCols
+    float delay
+    coords offset
+    int startCol
+    int animRow
+    int animCol
+    __init__(imageFile, cellSize, numRows, numCols, delay)
+    getCellImage(row, col) Surface
+    getNext(animRow) Surface
+}
+
+class BasicSprite {
+  [Deprecated]
+}
+
+BasicSprite --|> PygameSprite
+
+class SuperSprite {
+    [Deprecated]
+}
+
+SuperSprite --|> PygameSprite

@@ -2,7 +2,7 @@
 
 import pygame, simpleGE, random
 
-class Charlie(simpleGE.BasicSprite):
+class Charlie(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Charlie.png")
@@ -14,18 +14,18 @@ class Charlie(simpleGE.BasicSprite):
         self.dx = random.randint(-5, 5)
         self.dy = random.randint(-5, 5)
         
-    def checkEvents(self):
-        if self.scene.isKeyPressed(pygame.K_SPACE):
+    def process(self):
+        if self.isKeyPressed(pygame.K_SPACE):
             self.reset()
             
     def checkBounds(self):
-        if self.rect.left <= 0:
+        if self.left <= 0:
             self.dx *= -1
-        if self.rect.right >= self.screen.get_width():
+        if self.right >= self.screenWidth:
             self.dx *= -1
         if self.rect.top <= 0:
             self.dy *= -1
-        if self.rect.bottom >= self.screen.get_height():
+        if self.rect.bottom >= self.screenHeight:
             self.dy *= -1
             
 def main():

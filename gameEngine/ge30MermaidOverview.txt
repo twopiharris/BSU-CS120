@@ -1,0 +1,36 @@
+classDiagram
+
+class Scene 
+
+class Timer 
+
+class PygameSprite 
+
+class Sprite 
+
+Sprite --|> PygameSprite
+
+class Label
+
+Label --|> PygameSprite
+
+class Button 
+
+Button --|> Label
+
+class TxtInput
+
+TxtInput --|> Button
+
+class Scroller 
+
+Scroller --|> Button
+
+class MultiLabel
+
+MultiLabel --|> PygameSprite
+
+class Sound
+
+class SpriteSheet 
+

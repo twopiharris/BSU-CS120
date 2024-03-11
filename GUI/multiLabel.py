@@ -1,6 +1,10 @@
 import pygame, simpleGE
 
-"""multilabel.py """
+"""multilabel.py 
+   txtA Douglas Adams - Hitchiker's Guide to the Galaxy
+   txtB Monty Python and the Holy Grail
+
+"""
 
 
 textA = [

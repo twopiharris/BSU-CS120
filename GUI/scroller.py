@@ -19,7 +19,7 @@ class Game(simpleGE.Scene):
         
     def process(self):
         self.lblOut.text = f"{self.scroller.value}"
-        #self.scroller.text = f"<-{self.scroller.value}->"
+        self.scroller.text = f"<-  {self.scroller.value}  ->"
         
 def main():
     game = Game()

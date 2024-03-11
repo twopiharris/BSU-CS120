@@ -11,7 +11,7 @@ class Charlie(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         
-        #create a rectangle
+        # set up the image
         self.image = pygame.image.load("Charlie.png")
         self.image.convert_alpha()
         self.image = pygame.transform.scale(self.image, (50, 50))
@@ -26,6 +26,7 @@ class Charlie(pygame.sprite.Sprite):
         self.dy = 3
         
     def update(self):
+
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
         

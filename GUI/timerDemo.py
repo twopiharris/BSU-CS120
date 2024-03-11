@@ -9,7 +9,7 @@ class Game(simpleGE.Scene):
         super().__init__()
         
         self.timer = simpleGE.Timer()
-        self.timer.totalTime = 30
+        self.timer.totalTime = 10
         
         self.lblTimer = simpleGE.Label()
         self.lblTimer.center = (320, 100)
@@ -17,7 +17,7 @@ class Game(simpleGE.Scene):
         
         self.lblTimeLeft = simpleGE.Label()
         self.lblTimeLeft.center = (320, 200)
-        self.lblTimeLeft.text = "30"
+        self.lblTimeLeft.text = "10"
         
         self.btnReset = simpleGE.Button()
         self.btnReset.center = (320, 300)

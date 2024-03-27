@@ -3,20 +3,20 @@ import pygame, simpleGE, random
 """ car image - Andy Harris
 """
 
-class Car(simpleGE.SuperSprite):
+class Car(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("car.png")
         self.setSize(100, 50)
         
-    def checkEvents(self):
-        if self.scene.isKeyPressed(pygame.K_LEFT):
+    def process(self):
+        if self.isKeyPressed(pygame.K_LEFT):
             self.turnBy(5)
-        if self.scene.isKeyPressed(pygame.K_RIGHT):
+        if self.isKeyPressed(pygame.K_RIGHT):
             self.turnBy(-5)
-        if self.scene.isKeyPressed(pygame.K_UP):
+        if self.isKeyPressed(pygame.K_UP):
             self.forward(5)
-        if self.scene.isKeyPressed(pygame.K_DOWN):
+        if self.isKeyPressed(pygame.K_DOWN):
             self.forward(-5)
         
 def main():

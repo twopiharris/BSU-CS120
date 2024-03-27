@@ -23,6 +23,7 @@ def main():
 
     #load an image
     cardinal = pygame.image.load("Charlie.png")
+    #cardinal = cardinal.convert()
     cardinal = cardinal.convert_alpha()
     cardinal = pygame.transform.scale(cardinal, (100, 100))
 
@@ -48,10 +49,15 @@ def main():
                 keepGoing = False
 
         #modify cardinal value
-        cardinal_x += 5
-        #check boundaries
-        if cardinal_x > screen.get_width():
-            cardinal_x = 0
+        # cardinal_x += 5
+        # #check boundaries
+        # if cardinal_x > screen.get_width():
+        #     cardinal_x = 0
+
+        cardinal_y += 5
+        if cardinal_y > screen.get_height():
+            cardinal_y = 0
+
 
         #Refresh screen
         screen.blit(background, (0, 0))

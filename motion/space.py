@@ -5,7 +5,7 @@ import pygame, simpleGE
     ship images modified from Ari's spritelib.
 """
 
-class Ship(simpleGE.SuperSprite):
+class Ship(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.images = {
@@ -16,17 +16,17 @@ class Ship(simpleGE.SuperSprite):
         self.imageMaster = self.images["cruise"]
         self.setAngle(90)
         
-    def checkEvents(self):
-        self.imageMaster = self.images["cruise"]
-        if self.scene.isKeyPressed(pygame.K_LEFT):
-            self.rotateBy(5)
-            self.imageMaster = self.images["right"]
-        if self.scene.isKeyPressed(pygame.K_RIGHT):
-            self.rotateBy(-5)
-            self.imageMaster = self.images["left"]    
-        if self.scene.isKeyPressed(pygame.K_UP):
-            self.addForce(.2, self.rotation)
-            self.imageMaster = self.images["thrust"]
+    def process(self):
+        self.copyImage(self.images["cruise"])
+        if self.isKeyPressed(pygame.K_LEFT):
+            self.imageAngle += 5
+            self.copyImage(self.images["right"])
+        if self.isKeyPressed(pygame.K_RIGHT):
+            self.imageAngle -= 5
+            self.copyImage(self.images["left"])    
+        if self.isKeyPressed(pygame.K_UP):
+            self.addForce(.2, self.imageAngle)
+            self.copyImage(self.images["thrust"])
             
 def main():
     game = simpleGE.Scene()

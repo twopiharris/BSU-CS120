@@ -23,7 +23,7 @@ def main():
     
     #make a red 25 x 25 box
     box = pygame.Surface((25, 25))
-    box = box.convert()
+    #box = box.convert()
     box.fill((255, 0, 0))
     
     # set up some box variables

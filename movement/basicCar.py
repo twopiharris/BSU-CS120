@@ -2,6 +2,7 @@ import pygame, simpleGE
 
 """ Basic Car 
     turnBy and Forward
+    Car image - Andy Harris
 """
 
 class Car(simpleGE.Sprite):

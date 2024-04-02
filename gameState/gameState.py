@@ -6,7 +6,7 @@ illustrates how to swap between states
 
 """
 class Intro(simpleGE.Scene):
-    def __init__(self, score):
+    def __init__(self, score = 0):
         super().__init__()
         
         self.status = "quit"
@@ -16,15 +16,14 @@ class Intro(simpleGE.Scene):
         self.lblInstructions.textLines = [
             "The instructions for the game will go ",
             "here.  It will be some good instructions"]
-
+        self.lblInstructions.center = (320, 240)
+        self.lblInstructions.size = (400, 100)
+        
         self.lblScore = simpleGE.Label()
         self.lblScore.center = (320, 100)
         self.lblScore.size = (400, 30)
         self.lblScore.text = f"Previous Score: {self.score}"
 
-        self.lblInstructions.center = (320, 240)
-        self.lblInstructions.size = (400, 100)
-        
         self.btnPlay = simpleGE.Button()
         self.btnPlay.center = (150, 400)
         self.btnPlay.text = "Play"
@@ -51,6 +50,8 @@ class Intro(simpleGE.Scene):
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
+        
+        self.background.fill("lightblue")
         
         self.score = 0
         
@@ -80,20 +81,21 @@ class Game(simpleGE.Scene):
             self.stop()            
 
 def main():
-    
-    score = 0
+
     keepGoing = True
-    while(keepGoing):
+    score = 0
+    
+    while keepGoing:
         intro = Intro(score)
         intro.start()
-
-        if intro.status == "play":      
+        
+        if intro.status == "quit":
+            keepGoing = False
+        else:
             game = Game()
             game.start()
             score = game.score
-        else:
-            keepGoing = False
-    
+
 if __name__ == "__main__":
     main()
     

@@ -8,6 +8,7 @@ class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.background.fill("papayawhip")
+        self.setCaption("Common GUI element positions")
         
         lbl_150_100 = simpleGE.Label()
         lbl_150_100.center = (150, 100)
@@ -33,6 +34,18 @@ class Game(simpleGE.Scene):
         lbl_500_240.center = (500, 240)
         lbl_500_240.text = "(500, 240)"
         
+        lbl_150_400 = simpleGE.Label()
+        lbl_150_400.center = (150, 400)
+        lbl_150_400.text = "(150, 400)"
+        
+        lbl_320_400 = simpleGE.Label()
+        lbl_320_400.center = (320, 400)
+        lbl_320_400.text = "(320, 400)"
+        
+        lbl_500_400 = simpleGE.Label()
+        lbl_500_400.center = (500, 400)
+        lbl_500_400.text = "(500, 400)"
+        
         
         
         
@@ -44,6 +57,9 @@ class Game(simpleGE.Scene):
             lbl_150_240,
             lbl_320_240,
             lbl_500_240,
+            lbl_150_400,
+            lbl_320_400,
+            lbl_500_400
             
             ]
         

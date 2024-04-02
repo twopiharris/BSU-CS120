@@ -108,11 +108,11 @@ class Instructions(simpleGE.Scene):
         self.lblScore.center = (320, 400)
         
         self.btnPlay = simpleGE.Button()
-        self.btnPlay.text = "Play"
+        self.btnPlay.text = "Play (up)"
         self.btnPlay.center = (100, 400)
         
         self.btnQuit = simpleGE.Button()
-        self.btnQuit.text = "Quit"
+        self.btnQuit.text = "Quit (down)"
         self.btnQuit.center = (550, 400)
         
         self.sprites = [self.instructions,
@@ -121,12 +121,20 @@ class Instructions(simpleGE.Scene):
                         self.btnPlay]
         
     def process(self):
-        
+        #buttons
         if self.btnQuit.clicked:
             self.response = "Quit"
             self.stop()
         if self.btnPlay.clicked:
             self.response = "Play"
+            self.stop()
+
+        #arrow keys
+        if self.isKeyPressed(pygame.K_UP):
+            self.response = "Play"
+            self.stop()
+        if self.isKeyPressed(pygame.K_DOWN):
+            self.response = "Quit"
             self.stop()
 
 def main():
@@ -147,4 +155,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-

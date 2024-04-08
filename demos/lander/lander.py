@@ -30,8 +30,6 @@ class Lander(simpleGE.Sprite):
             self.dx -= self.sideThrust
             self.inFlight = True
         
-        #self.updateVector()
-        
 class Platform(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
@@ -82,7 +80,7 @@ class Game(simpleGE.Scene):
                             print("too much vertical velocity")
                     else:
                         badDY = self.lander.dy
-                        print("must approach from top %.2f" % badDY)
+                        print(f"must approach from top {badDY:.2f}")
                 else:
                     print("going too fast to left")
             else:

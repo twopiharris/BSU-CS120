@@ -18,17 +18,11 @@ class HotSpot(simpleGE.Sprite):
         self.transparent = False
         
     def process(self):
-
         #check for transparency
         if self.transparent:
             self.image.set_alpha(0)
         else:
             self.image.set_alpha(100)
-                    
-    def setPosition(self, position):
-        self.x = position[0]
-        self.y = position[1]
-        self.rect = self.image.get_rect()
 
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -65,7 +59,7 @@ class Game(simpleGE.Scene):
         if self.hsTree.clicked:
             print("You clicked on the tree")
             
-    def doEvents(self, event):
+    def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 self.hsTree.transparent = not self.hsTree.transparent

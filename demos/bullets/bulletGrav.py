@@ -1,4 +1,4 @@
-import pygame, simpleGE, math
+import pygame, simpleGE
 
 """ bullets with gravity """
 
@@ -14,6 +14,7 @@ class Bullet(simpleGE.Sprite):
     def fire(self):
         # allow only one bullet at a time
         if not self.visible:
+            self.scene.clearScreen()
             self.show()
             self.position = self.parent.position
             self.moveAngle = self.parent.imageAngle
@@ -21,8 +22,8 @@ class Bullet(simpleGE.Sprite):
 
     def process(self):
         if self.visible:
-            #self.dy += 1
             self.addForce(1, 270)
+            self.drawTrace("gray")
         else:
             self.speed = 0
         
@@ -64,6 +65,9 @@ class Game(simpleGE.Scene):
         self.scrVelocity = ScrVelocity()
 
         self.sprites = [self.bullet, self.gun, self.scrVelocity]
+        
+    def clearScreen(self):
+        self.background.fill("black")
         
 def main():
     game = Game()

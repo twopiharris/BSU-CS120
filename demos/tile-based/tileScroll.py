@@ -89,7 +89,7 @@ class Game(simpleGE.Scene):
                 currentVal = self.map[row + self.offRow][col + self.offCol]
                 self.tileset[row][col].setState(currentVal)
                 
-    def update(self):
+    def process(self):
         if self.isKeyPressed(pygame.K_LEFT):
             if self.offCol > 0:
                 self.offCol -= 1

@@ -48,7 +48,6 @@ class Game(simpleGE.Scene):
         self.upperBarrier.position = (640, self.topPosition)
         self.lowerBarrier.position = (640, self.bottomPosition)
         
-    
 def main():
     game = Game()
     game.start()

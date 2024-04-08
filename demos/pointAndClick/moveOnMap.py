@@ -23,19 +23,13 @@ class Crosshair(simpleGE.Sprite):
         self.setImage("crosshair010.png")
         self.setSize(50, 50)
         
-        
     def process(self):
-        (mx, my) = pygame.mouse.get_pos()
-        self.x = mx
-        self.y = my
-        
+        self.position = pygame.mouse.get_pos()
     
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.setImage("example_map.png")
-        #self.background = pygame.image.load("example_map.png")
-        #self.background = pygame.transform.scale(self.background, (640, 480))
         
         #hide mouse pointer
         pygame.mouse.set_visible(False)
@@ -64,7 +58,6 @@ def main():
     game = Game()
     game.start()
     pygame.mouse.set_visible(True)
-    
     
 if __name__ == "__main__":
     main()

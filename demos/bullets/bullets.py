@@ -42,7 +42,7 @@ class Game(simpleGE.Scene):
                                 
         self.sprites = [self.ship, self.bullets]
 
-    def doEvents(self, event):
+    def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 self.currentBullet += 1

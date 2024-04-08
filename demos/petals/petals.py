@@ -32,20 +32,34 @@ class Game(simpleGE.Scene):
         
         self.sprites = [self.dice, self.btnRoll, self.lblResult, 
                         self.btnReveal]
-    
-    def process(self):
-        if self.btnRoll.clicked:
-            self.sndRoll.play()
-            totalPetals = 0
-            for die in self.dice:
-                die.roll()
-                totalPetals += die.nPetals
-                
-            self.lblResult.hide()
-            self.lblResult.text = f"{totalPetals} petals around the rose"
+
+    def rollAll(self):
+        self.sndRoll.play()
+        totalPetals = 0
+        for die in self.dice:
+            die.roll()
+            totalPetals += die.nPetals
+            
+        self.lblResult.text = f"{totalPetals} petals around the rose"
         
+        #sneaky check for label visible
+        if self.lblResult.center[0] >= 0:
+            self.lblResult.hide()
+        
+    def process(self):
+        #button presses
+        if self.btnRoll.clicked:
+            self.rollAll()
         if self.btnReveal.clicked:
             self.lblResult.show()
+
+    def processEvent(self, event):
+        #keyboard alternates
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                self.rollAll()
+            if event.key == pygame.K_SPACE:
+                self.lblResult.show()
             
 class Die(simpleGE.Sprite):
     def __init__(self, scene):
@@ -79,7 +93,7 @@ class BtnRoll(simpleGE.Button):
     def __init__(self):
         super().__init__()
         self.center = ((320, 240))
-        self.text = "Roll 'em"
+        self.text = "Roll 'em (R)"
 
 class LblResult(simpleGE.Label):
     def __init__(self):
@@ -87,13 +101,14 @@ class LblResult(simpleGE.Label):
         self.center = ((320, 310))
         self.text = "0 petals around the rose"
         self.size = ((250, 30))
-        #self.hide()
+        self.hide()
+        self.show()
 
 class BtnReveal(simpleGE.Button):
     def __init__(self):
         super().__init__()
         self.center = ((320, 410))
-        self.text = "Reveal"
+        self.text = "Reveal (space)"
 
 def main():
     game = Game()

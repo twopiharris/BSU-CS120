@@ -1,6 +1,13 @@
 import pygame, simpleGE, math
 
-""" orbit.py """
+""" orbit.py
+    Newton's law of Universal gravitation
+
+    m1 * m2
+    ------   G
+      d^2
+      
+"""
 class Ship(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
@@ -12,6 +19,7 @@ class Ship(simpleGE.Sprite):
         self.copyImage(self.images["cruise"])
         self.setAngle(90)
         self.mass = 1
+        self.boundAction = self.CONTINUE
         
     def process(self):
         self.copyImage(self.images["cruise"])
@@ -41,18 +49,21 @@ class Planet(simpleGE.Sprite):
         force = (body.mass * self.mass)/distance **2
         direction = self.scene.ship.dirTo(self.rect.center)
         self.scene.ship.addForce(force, direction)
-        
     
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.setCaption("arrows to control ship, space to clear trace")
         self.ship = Ship(self)
+        self.ship.position = (320, 200)
+        self.ship.setAngle(0)
+        self.ship.speed = 3
+        
         self.planet = Planet(self)
         
         self.sprites = [self.ship, self.planet]
         
-    def update(self):
+    def process(self):
         self.planet.gravitate(self.ship)
         self.ship.drawTrace("gray")
         

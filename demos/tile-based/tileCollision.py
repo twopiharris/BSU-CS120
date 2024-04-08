@@ -20,6 +20,8 @@ class Player(simpleGE.Sprite):
         super().__init__(scene)
         self.colorRect("red", (20, 20))
         self.moveSpeed = 2
+        self.tileOver = (0, 0)
+        self.tileState = 0
 
     def process(self):
         
@@ -35,9 +37,13 @@ class Player(simpleGE.Sprite):
             
         # look for a target tile
         if self.tileOver == (12, 19):
-            self.imageMaster.fill("white")
+            position = self.position
+            self.colorRect("white", (20, 20))
+            self.position = position
         else:
-            self.imageMaster.fill("red")
+            position = self.position
+            self.colorRect("red", (20, 20))
+            self.position = position
             
         #adjust movement speed by terrain
         if self.tileState == "0":

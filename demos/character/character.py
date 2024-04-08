@@ -24,7 +24,6 @@ class Player(simpleGE.Sprite):
         self.walkAnim.startCol = 1
         self.animRow = 2
         self.moveSpeed = 2
-        #self.copyImage(self.walkAnim.getCellImage(0, 0))
         
     def process(self):
         self.dx = 0
@@ -54,7 +53,6 @@ class Player(simpleGE.Sprite):
             #use the current idle image
             self.copyImage(self.walkAnim.getCellImage(0, self.animRow))
 
-        #self.rect = self.imageMaster.get_rect()
         
 def main():
     game = Game()

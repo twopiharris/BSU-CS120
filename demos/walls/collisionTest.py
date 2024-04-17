@@ -9,7 +9,7 @@ class MovyThing(simpleGE.Sprite):
         
     def process(self):
         self.speed = 0
-        #self.dir = "none"
+        self.dir = "none"
         if self.isKeyPressed(pygame.K_a):
             self.dx = -5
             self.dir = "left"

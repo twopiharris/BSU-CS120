@@ -24,30 +24,30 @@ class MovyThing(simpleGE.Sprite):
             self.dy = 5
 
         #barrier check
-        barrier = self.scene.barrier
-        if self.collidesWith(barrier):
-            if self.dir == "left":
-                self.speed = 0
-                if self.left <= barrier.right:
-                    self.left = barrier.right
-                    
-            elif self.dir == "right":
-                self.speed = 0
-                if self.right >= barrier.left:
-                    self.right = barrier.left
-                    
-            elif self.dir == "up":
-                self.speed = 0
-                if self.top <= barrier.bottom:
-                    self.top = barrier.bottom
+        for barrier in self.scene.walls:
+            if self.collidesWith(barrier):
+                if self.dir == "left":
                     self.speed = 0
-                    
-            elif self.dir == "down":
-                self.speed = 0
-                if self.bottom >= barrier.top:
-                    self.bottom = barrier.top
+                    if self.left <= barrier.right:
+                        self.left = barrier.right
+                        
+                elif self.dir == "right":
                     self.speed = 0
-            
+                    if self.right >= barrier.left:
+                        self.right = barrier.left
+                        
+                elif self.dir == "up":
+                    self.speed = 0
+                    if self.top <= barrier.bottom:
+                        self.top = barrier.bottom
+                        self.speed = 0
+                        
+                elif self.dir == "down":
+                    self.speed = 0
+                    if self.bottom >= barrier.top:
+                        self.bottom = barrier.top
+                        self.speed = 0
+                
 
 class DrivyThing(simpleGE.Sprite):
     
@@ -125,12 +125,10 @@ class Wall(simpleGE.Sprite):
         self.colorRect("red", (50, 50))
         
     def process(self):
-        if pygame.mouse.get_pressed((1, 0, 0)):
+        if self.mouseDown:
             self.position = pygame.mouse.get_pos()
         
 class Game(simpleGE.Scene):
-    
-    """ used only for testing purposes. not a formal part of simpleGE """
 
     def __init__(self):
         super().__init__()
@@ -140,10 +138,10 @@ class Game(simpleGE.Scene):
         self.movy = MovyThing(self)
         
         self.walls = []
-        for i in range(5):
+        for i in range(10):
             newWall = Wall(self)
-            newWall.y = 400
-            newWall.x = i * 50
+            newWall.y = 300
+            newWall.x = (i * 50) + 125
             self.walls.append(newWall)
         
         self.lblOut = LblOut()

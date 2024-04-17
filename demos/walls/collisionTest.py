@@ -89,6 +89,7 @@ class DrivyThing(simpleGE.Sprite):
             dir = "down"
         else:
             dir = "right"
+
         
         if self.collidesWith(barrier):
 
@@ -120,8 +121,6 @@ class LblOut(simpleGE.Label):
 
 class Game(simpleGE.Scene):
     
-    """ used only for testing purposes. not a formal part of simpleGE """
-
     def __init__(self):
         super().__init__()
         self.background.fill("papayawhip")

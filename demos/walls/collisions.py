@@ -1,13 +1,14 @@
 """ collisionTest.py """
 
-import pygame, simpleGE, collisions
+import pygame, simpleGE
+
 class MovyThing(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.colorRect("Blue", (50, 50))
         
     def process(self):
-        self.speed = 0
+        #self.speed = 0
         self.correction = (0, 0)
         if self.isKeyPressed(pygame.K_a):
             self.x -= 5
@@ -23,20 +24,12 @@ class MovyThing(simpleGE.Sprite):
             self.correction = (0, -5) 
 
         #barrier check
-        for barrier in self.scene.walls:
-            if self.collidesWith(barrier):
-                self.x += self.correction[0]
-                self.y += self.correction[1]
+        barrier = self.scene.barrier
+        if self.collidesWith(barrier):
+            self.x += self.correction[0]
+            self.y += self.correction[1]
             
-class LblOut(simpleGE.Label):
-    def __init__(self):
-        super().__init__()
-        self.center = (320, 30)
-        self.size = (200, 30)
-        self.fgColor = "blue"
-        self.bgColor = "white"
-        self.clearBack = True
-         
+            
 class DrivyThing(simpleGE.Sprite):
     
     def __init__(self, scene):
@@ -61,43 +54,30 @@ class DrivyThing(simpleGE.Sprite):
         if self.speed > 5:
             self.speed = 5
             
-        for barrier in self.scene.walls:
-            if self.collidesWith(barrier):
-                self.x -= self.dx
-                self.y -= self.dy
-                self.speed = 0
-          
-class Wall(simpleGE.Sprite):
-    def __init__(self, scene):
-        super().__init__(scene)
-        self.colorRect("red", (50, 50))
-        
-    def process(self):
-        if self.mouseDown:
-            self.position = pygame.mouse.get_pos()
-        
-class Game(simpleGE.Scene):
+        barrier = self.scene.barrier
+        if self.collidesWith(barrier):
 
+            self.x -= self.dx
+            self.y -= self.dy
+            self.speed = 0
+
+class Game(simpleGE.Scene):
+    
     def __init__(self):
         super().__init__()
         self.background.fill("papayawhip")
-        self.setCaption("WASD for box, arrows for car, drag red barriers")
+        self.setCaption("WASD for box, arrows for car")
         self.drivy = DrivyThing(self)
         self.drivy.position = (500, 100)
         self.movy = MovyThing(self)
         
-        self.walls = []
-        for i in range(10):
-            newWall = Wall(self)
-            newWall.y = 300
-            newWall.x = (i * 50) + 125
-            self.walls.append(newWall)
-        
-        self.lblOut = LblOut()
-        self.sprites = [self.lblOut, 
-                        self.walls,
+        self.barrier = simpleGE.Sprite(self)
+        self.barrier.colorRect("red", (100, 100))
+        self.barrier.x = 320
+        self.barrier.y = 240
+        self.sprites = [self.barrier,
                         self.movy,
-                        self.drivy]
+                        self.drivy] 
         
 def main():
     game = Game()

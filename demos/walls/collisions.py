@@ -29,7 +29,6 @@ class MovyThing(simpleGE.Sprite):
             self.x += self.correction[0]
             self.y += self.correction[1]
             
-            
 class DrivyThing(simpleGE.Sprite):
     
     def __init__(self, scene):

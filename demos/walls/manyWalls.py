@@ -63,8 +63,8 @@ class DrivyThing(simpleGE.Sprite):
             
         for barrier in self.scene.walls:
             if self.collidesWith(barrier):
-                self.x -= self.dx
-                self.y -= self.dy
+                self.x -= self.dx * 2
+                self.y -= self.dy * 2
                 self.speed = 0
           
 class Wall(simpleGE.Sprite):

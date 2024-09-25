@@ -42,8 +42,9 @@ class Game(simpleGE.Scene):
         self.sndCoin = simpleGE.Sound("coin.wav")
         
         self.charlie = Charlie(self)
+        self.numCoins = 10
         self.coins = []
-        for i in range(10):
+        for i in range(self.numCoins):
             self.coins.append(Coin(self))
         
         self.sprites = [self.charlie,

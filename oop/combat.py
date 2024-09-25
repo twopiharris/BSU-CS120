@@ -1,7 +1,4 @@
-#!/usr/bin/python3.8
-
 import tbc
-
 def main():
     hero = tbc.Character()
     hero.name = "Hero"
@@ -17,5 +14,6 @@ def main():
 
     tbc.fight(hero, monster)
 
+main()
 if __name__ == "__main__":
     main()

@@ -1,5 +1,3 @@
-#!/usr/bin/python3.8
-
 """ ants3.py
     classic counting song
     further improvement with a list

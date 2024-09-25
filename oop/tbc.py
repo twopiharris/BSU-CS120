@@ -1,4 +1,3 @@
-#!/usr/bin/python3.8
 import random
 
 """ tbc.py
@@ -193,6 +192,8 @@ def fight(player1, player2):
         dummy = input("Press ENTER for another round...")
 
 def main():
+    print("Whoo hoo! I'm in the module main!")
+    print(f"My name is {__name__}.")
     c = Character()
     print("testing default character")
     c.printStats()
@@ -208,6 +209,7 @@ def main():
     enemy = Character("Ignorance")
 
     playerFight(me, enemy)
+
 
 if __name__ == "__main__":
     main()

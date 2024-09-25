@@ -7,7 +7,7 @@ tripFinished = "NO"
 while tripFinished != "YES":
     print("We're still driving...")
 
-    tripFinished = input("Are we there yet? ")
-    tripFinished = tripFinished.upper()
+tripFinished = input("Are we there yet? ")
+tripFinished = tripFinished.upper()
 
 print ("Can we go home now?")

@@ -18,7 +18,7 @@ class Game(simpleGE.Scene):
 class Player(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
-        self.walkAnim = simpleGE.SpriteSheet("characterWalk.png", (64, 64), 4, 9, .1)
+        self.walkAnim = simpleGE.SpriteSheet("characterWalk.png", (64, 64), 4, 9, 0.1)
 
         #in this animation, cell 0 is idle, so start at 1
         self.walkAnim.startCol = 1

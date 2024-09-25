@@ -17,5 +17,5 @@ theFunction()
 
 print(f"back outside the function, varOutside is: {varOutside}")
 # if I uncomment the next line, the program will crash
-#print("back outside the function, varInside is: {varInside}")
+print(f"back outside the function, varInside is: {varInside}")
 

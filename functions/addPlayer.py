@@ -37,8 +37,6 @@ def addPlayer(players):
 
 def main():
     """ run menu, adding and showing players until user wants to quit """
-
-    breakpoint()
     players = []
     keepGoing = True
     while(keepGoing):

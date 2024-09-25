@@ -19,9 +19,9 @@ def main():
         if result == "0":
             keepGoing = False
         elif result == "1":
-            fileName = "CS120_2_s24.txt"
+            fileName = "CS120_2_f24.txt"
         elif result == "2":
-            fileName = "CS120_3_s24.txt"
+            fileName = "CS120_2_f24.txt"
 
         if keepGoing:
             studentList = makeList(fileName)

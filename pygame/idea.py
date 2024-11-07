@@ -17,8 +17,8 @@ def main():
 
     #E - Entities (just background for now)
     background = pygame.Surface(screen.get_size())
-    background = background.convert()
-    background.fill((0, 0, 255))
+    #background = background.convert()
+    background.fill("blue")
 
     #A - Action (broken into ALTER steps)
 

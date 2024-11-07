@@ -8,7 +8,7 @@
 def main():
     game = getGame()
     keepGoing = True
-    nextNode = "start"
+    nextNode = "start"    
     while keepGoing:
         nextNode = playNode(game, nextNode)
         if nextNode == "quit":
@@ -25,8 +25,8 @@ def getGame():
 
     return game
 
-def playNode(game, currentNode):
-    (desc, menuA, nodeA, menuB, nodeB) = game[currentNode]
+def playNode(game, currentNodeKey):
+    (desc, menuA, nodeA, menuB, nodeB) = game[currentNodeKey]
 
     print (f"""
     {desc}
@@ -36,13 +36,13 @@ def playNode(game, currentNode):
     userChoice = input("Your choice: ")
 
     if userChoice == "1":
-        nextNode = nodeA
+        nextNodeKey = nodeA
     elif userChoice == "2":
-        nextNode = nodeB
+        nextNodeKey = nodeB
     else:
         print ("Not a valid input. Please enter '1' or '2.'")
-        nextNode = currentNode
+        nextNodeKey = currentNode
 
-    return nextNode
+    return nextNodeKey
 
 main()

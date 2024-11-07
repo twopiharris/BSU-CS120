@@ -52,17 +52,17 @@ class Sprite(pygame.sprite.Sprite):
         
         #motion private attributes
         #initialize directly to get clean starting values
-        self.__moveAngle = 0
-        self.__imageAngle = 0
-        self.__speed = 0
-        self.__dx = 0 
-        self.__dy = 0
+        self.__moveAngle = 0.0
+        self.__imageAngle = 0.0
+        self.__speed = 0.0
+        self.__dx = 0.0 
+        self.__dy = 0.0
         
         # motion properties
-        self.dx = 0
-        self.dy = 0
-        self.speed = 0 
-        self.moveAngle = 0
+        self.dx = 0.0
+        self.dy = 0.0
+        self.speed = 0.0 
+        self.moveAngle = 0.0
         self.oldCenter = self.position
         
         
@@ -949,7 +949,8 @@ class SuperSprite(pygame.sprite.Sprite):
             if pygame.mouse.get_pressed() == (0, 0, 0):
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     released = True
-            return released
+                    
+        return released
         
     def collidesWith(self, target):
         """ boolean function. Returns True if the sprite

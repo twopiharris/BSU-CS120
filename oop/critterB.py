@@ -28,7 +28,7 @@ class Critter(object):
 def main():
     c = Critter()
     c.sayHi()
-    c.name = "Percival"
+    c.name = "Floofie"
     c.sayHi()
 
 if __name__ == "__main__":

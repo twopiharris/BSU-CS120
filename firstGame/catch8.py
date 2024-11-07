@@ -138,7 +138,6 @@ class Instructions(simpleGE.Scene):
             self.stop()
 
 def main():
-    
     keepGoing = True
     score = 0
     while keepGoing:
@@ -152,6 +151,7 @@ def main():
             score = game.score
         else:
             keepGoing = False
-    
+            
+            
 if __name__ == "__main__":
     main()

@@ -20,7 +20,7 @@ def main():
     doAnotherThing()
     print(f"BTW my namespace is '{__name__}'")
 
-
+#main()
 
 #only run main if I am NOT imported
 if __name__ == "__main__":

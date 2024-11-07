@@ -57,7 +57,7 @@ class Game(simpleGE.Scene):
 def main():
     game = Game()
     game.start()
-    pygame.mouse.set_visible(True)
+    #pygame.mouse.set_visible(True)
     
 if __name__ == "__main__":
     main()

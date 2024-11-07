@@ -28,7 +28,7 @@ def main():
     cardinal = pygame.transform.scale(cardinal, (100, 100))
 
     # set up some cardinal variables
-    cardinal_x = 0
+    cardinal_x = 320
     cardinal_y = 200
 
     #ACTION

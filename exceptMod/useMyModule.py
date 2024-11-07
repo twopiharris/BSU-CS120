@@ -1,10 +1,9 @@
-#!/usr/bin/python3.8
-
 import myModule
 
 def main():
     myModule.doAthing()
 
+#main()
 
 if __name__ == "__main__":
     main()

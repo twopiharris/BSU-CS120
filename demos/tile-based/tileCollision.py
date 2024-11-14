@@ -46,7 +46,7 @@ class Player(simpleGE.Sprite):
             self.position = position
             
         #adjust movement speed by terrain
-        if self.tileState == "0":
+        if self.tileState == 0:
             self.moveSpeed = 2
         elif self.tileState == 1:
             self.moveSpeed = 4

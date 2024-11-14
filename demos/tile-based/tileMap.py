@@ -21,7 +21,11 @@ class Tile(simpleGE.Sprite):
         self.state = self.GRASS
 
     def setState(self, state):
-        self.state = state
+        if state in (0, 1, 2):
+            self.state = state
+        else:
+            self.state = self.GRASS
+            
         self.copyImage(self.images[state])
 
     def process(self):

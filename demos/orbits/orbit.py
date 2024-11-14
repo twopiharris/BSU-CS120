@@ -45,9 +45,9 @@ class Planet(simpleGE.Sprite):
         self.y = 240
         
     def gravitate(self, body):
-        distance = self.distanceTo(self.scene.ship.rect.center)
+        distance = self.distanceTo(self.scene.ship.position)
         force = (body.mass * self.mass)/distance **2
-        direction = self.scene.ship.dirTo(self.rect.center)
+        direction = self.scene.ship.dirTo(self.position)
         self.scene.ship.addForce(force, direction)
     
 class Game(simpleGE.Scene):

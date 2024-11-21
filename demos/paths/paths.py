@@ -52,12 +52,13 @@ class Game(simpleGE.Scene):
             (564, 399),
             (38, 413)
         )
-        self.path = Path(self.player, pointList, )
+        self.path = Path(self.player, pointList, 7)
         
         self.sprites = [self.player]
         
     def process(self):
         self.path.process()
+        self.player.drawTrace("white")
 
     def processEvent(self, event):
         """ print out mouse clicks

@@ -2,20 +2,31 @@ import pygame, simpleGE
 
 """ collisionMap Demo
     describe how to use a collision map
+
+
+    Normally we would simply draw the color
+    background in place and use the b&w version for
+    collision mapping. It isn't necessary to ever show
+    the collision map, but I put it in a large sprite
+    for illustration purposes.
     
 """
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
-        self.setImage("trackBW.png")
+        self.setImage("trackColor.png")
         
         self.car = Car(self)
-        self.prettyTrack = simpleGE.Sprite(self)
-        self.prettyTrack.setImage("trackColor.png")
-        self.prettyTrack.position = (320, 240)
-        self.prettyTrack.hide()
-        self.sprites = [self.prettyTrack,
+        
+        # It isn't necessary to build this sprite
+        # I just did it for illustration purposes
+        
+        self.bwTrack = simpleGE.Sprite(self)
+        self.bwTrack.setImage("trackBW.png")
+        self.bwTrack.position = (320, 240)
+        self.bwTrack.hide()
+        self.sprites = [self.bwTrack,
                         self.car]
         self.setCaption("B for black and white, C for color")
         
@@ -23,11 +34,11 @@ class Game(simpleGE.Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_b:
                 print("B and W")
-                self.prettyTrack.hide()
+                self.bwTrack.show()
                 
             if event.key == pygame.K_c:
                 print("Color")
-                self.prettyTrack.show()
+                self.bwTrack.hide()
                 
         
 class Car(simpleGE.Sprite):
@@ -47,13 +58,20 @@ class Car(simpleGE.Sprite):
             self.forward(self.moveSpeed)
         if self.isKeyPressed(pygame.K_DOWN):
             self.forward(-3)
-            
+        
+        #here's the collision magic!
         colorUnder = self.colMap.get_at((int(self.position[0]),
                                         int(self.position[1])))
-        if colorUnder == (255, 255, 255):
-            self.moveSpeed = 1
-        else:
+        
+        # do whatever you want with various colors
+        # in this case I go full speed on black (0, 0, 0)
+        # and much slower on any other color.
+        # you can add other colors for drag, 'oil stains', etc
+        
+        if colorUnder == (0, 0, 0):
             self.moveSpeed = 5
+        else:
+            self.moveSpeed = 1
     
 
 def main():

@@ -1,5 +1,9 @@
 import pygame, simpleGE, random
 
+# public domain card images from here:
+# https://tekeye.uk/playing_cards/svg-playing-cards#google_vignette
+
+
 #keep some of the constants from the earlier game
 NUMCARDS = 52
 RANKNAME = ("Ace", "Two", "Three", "Four", "Five",

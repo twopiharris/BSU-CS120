@@ -35,6 +35,7 @@ class Game(simpleGE.Scene):
             if event.key == pygame.K_b:
                 print("B and W")
                 self.bwTrack.show()
+                self.bwTrack.position = (320, 240)
                 
             if event.key == pygame.K_c:
                 print("Color")
@@ -44,7 +45,7 @@ class Game(simpleGE.Scene):
 class Car(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
-        self.colorRect("green", (50, 25))
+        self.colorRect("red", (50, 25))
         self.moveSpeed = 5
         self.colMap = pygame.image.load("trackBW.png")
         

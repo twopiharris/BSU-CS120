@@ -4,6 +4,7 @@ import pygame, simpleGE
 
     a tool for managing paths
 """
+
 class Path(object):
     """ A tool for adding a linear interpolation path
         to any sprite.
@@ -22,15 +23,15 @@ class Path(object):
         * sprite - the sprite
         * pointList - the pointList. must have at least two points
         * counter - the index of the position you are LEAVING
-        * currentPoint - the pointer you are LEAVING
-        * nextPoint - the pointer you are HEADING towards
+        * currentPoint - the point you are LEAVING
+        * nextPoint - the point you are HEADING towards
         * rotate - if True, turns the sprite towards the next point
         * threshold - distance from the point to count as a trigger
                       defaults to 15, should be roughly twice speed
                       or you might 'overshoot' the target.    
     """
     
-    def __init__(self, sprite, pointList, speed = 5):
+    def __init__(self, sprite, pointList, speed = 7):
         super().__init__()
         #set initial attributes
         self.sprite = sprite
@@ -73,6 +74,7 @@ class Game(simpleGE.Scene):
         super().__init__()
         self.player = simpleGE.Sprite(self)
         self.player.colorRect("green", (50, 25))
+            
         pointList = (
             (30, 31),
             (278, 163),
@@ -83,14 +85,16 @@ class Game(simpleGE.Scene):
             (50, 423),
             (283, 218)
         )
-        self.path = Path(self.player, pointList, 10)
+
+        self.path = Path(self.player, pointList, 7)
         self.path.rotate = True
+        self.path.threshold = 15
         
         self.sprites = [self.player]
         
     def process(self):
         self.path.process()
-        self.player.drawTrace("white")
+        #self.player.drawTrace("white")
 
     def processEvent(self, event):
         """ print out mouse clicks

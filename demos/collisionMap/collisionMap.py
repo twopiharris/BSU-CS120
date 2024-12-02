@@ -33,11 +33,9 @@ class Game(simpleGE.Scene):
     def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_b:
-                print("B and W")
                 self.bwTrack.show()
                 
             if event.key == pygame.K_c:
-                print("Color")
                 self.bwTrack.hide()
                 
         

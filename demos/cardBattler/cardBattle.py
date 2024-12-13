@@ -113,7 +113,9 @@ class Deck(object):
         for card in self.cards:
             if card.state == HAND:
                 hand.append(card)
-                
+        
+        #hand = [card for card in self.cards if card.state == DECK]
+        
         currentCard = hand[cardNum]
         currentCard.state = DISCARD
 

@@ -165,7 +165,7 @@ def main():
     print("Initial state: ")
     player1.deck.showAllCards()
     
-    print ("dealing 2 cards to each player...")
+    print ("dealing 3 cards to each player...")
     player1.deck.deal(3, HAND)
     player2.deck.deal(3, HAND)
     

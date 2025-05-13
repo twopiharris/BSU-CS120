@@ -1,11 +1,4 @@
 
-<!DOCTYPE HTML>
-<html lang = "en-us">
-<head>
-  <title>List of demo files</title>
-  <meta charset = "utf-8">
-</head>
-
 <body>
   <h1>Input and variable Demo Files</h1>
   <ul>
@@ -18,5 +11,3 @@
     <li><a href = "adder2.py">adder2.py</a></li>
 
   </ul>
-</body>
-</html>

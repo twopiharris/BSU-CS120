@@ -15,7 +15,6 @@
 <ul>
   <li><a href = "pygame">Introduction to pygame</a></li>
   <li><a href = "gameEngine">Introduction to the simpleGE game engine</a></li>
-  <li><a href = "simpleGE">SimpleGE</a></li>
   <li><a href = "firstGame">Creating your first game</a></li>
   <li><a href = "GUI">Building a graphic user interface (GUI)</a></li>
   <li><a href = "gameState">Game states</a></li>

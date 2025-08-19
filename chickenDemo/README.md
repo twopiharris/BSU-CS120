@@ -133,6 +133,17 @@ checking for collisions and the passage of time. On every frame, check the follo
  * update lblTimer to reflect the new time left
  * if the time remaining is less than zero seconds, end the game
  * Each collision type will have an associated sound effect, to provide immediate feedback
+
+# State Transition
+```mermaid
+
+flowchart TD
+    A(start) -->B[intro]
+    B -->|play| C[game]
+    C -->|time up| B
+    B -->|quit| D(end)
+
+```
  
 # Asset List
 This game uses the following assets.  All are either original or on a creative commons license
@@ -143,6 +154,19 @@ This game uses the following assets.  All are either original or on a creative c
  * background music - congusbongus: https://opengameart.org/content/chicken-n-corn
  * chicken sound effect - ImadeIt: https://opengameart.org/content/chicken-sound-effect (modified AJH)
  * powerUp.wav, hitHurt.wav - AJH in jsfxr: https://sfxr.me
+
+# Milestone plan
+* Basic Game scene with background
+* Chicken with placeholder, keyboard motion
+* Standard egg with placeholder
+* Chicken - egg collision
+* Scorekeeping / timing
+* Game state management
+* More time powerup
+* Fewer eggs powerdown
+* Sound effects
+* Chicken animation / graphics improvements
+* gamepad input
 
 # Stretch Goals
 

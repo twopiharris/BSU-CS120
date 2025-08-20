@@ -60,7 +60,7 @@ def main():
                 keepGoing = False
                 
         # clear and redraw sprites
-        #allSprites.clear(screen, background)
+        allSprites.clear(screen, background)
         allSprites.update()
         allSprites.draw(screen)
         

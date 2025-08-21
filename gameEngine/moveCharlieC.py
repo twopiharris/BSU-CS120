@@ -19,12 +19,10 @@ class Charlie(simpleGE.Sprite):
 def main():
     scene = simpleGE.Scene()
     scene.background.fill("papayawhip")
-    scene.setCaption("Using polling in extended BasicSprite")
+    scene.setCaption("Using polling in extended Sprite")
     charlie = Charlie(scene)
     scene.sprites = [charlie]
     scene.start()
     
 if __name__ == "__main__":
     main()
-    
-    

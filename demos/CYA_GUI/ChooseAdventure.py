@@ -7,7 +7,7 @@ class Game(simpleGE.Scene):
 
         self.getDefaultGame()
         
-        self.background.fill("yellow")
+        self.background.fill("lightBlue")
         
         self.lblDescription = simpleGE.MultiLabel()
         self.lblDescription.textLines = [
@@ -35,10 +35,9 @@ class Game(simpleGE.Scene):
         self.displayNode(self.currentKey)
 
 
-
     def getDefaultGame(self):
         self.nodes = {
-            "start": [["Do you want to win or lose?"], "I want to win", "win", "I deserve to lose", "lose"],
+            "start": [["Do you want to win or lose?", "this can be ", "multiple lines"], "I want to win", "win", "I deserve to lose", "lose"],
             "win":   [["YOU WIN!!!"], "start over", "start", "quit", "quit"],
             "lose":  [["Sorry. You lost."], "start over", "start", "quit", "quit"]
         }

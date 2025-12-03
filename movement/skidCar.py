@@ -42,7 +42,6 @@ class Game(simpleGE.Scene):
         self.sprites = [self.car]
         
         
-        
 def main():
     game = Game()
     game.start()

@@ -3,8 +3,8 @@ import pygame, simpleGE, math
 """ orbit.py
     Newton's law of Universal gravitation
 
-    m1 * m2
-    ------   G
+      m1 * m2
+f =   ------   G
       d^2
       
 """

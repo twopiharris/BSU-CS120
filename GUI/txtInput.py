@@ -11,7 +11,6 @@ class Game(simpleGE.Scene):
         self.lblOut.size = (300, 30)
         self.lblOut.text = "Please enter your name"
         
-        
         self.txtName = simpleGE.TxtInput()
         self.txtName.center = (320, 200)
         self.txtName.text = ""

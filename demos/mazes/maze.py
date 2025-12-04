@@ -10,7 +10,8 @@ import pygame, simpleGE
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
-        self.setImage("maze_rect.png")
+        self.setImage("maze_hex.png")
+        #self.setImage("maze_rect.png")
         self.setCaption("R for rect, F for funky, T for triangle maze")
         self.player = Player(self)
         
@@ -32,7 +33,7 @@ class Player(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.colorRect("green", (20, 20))
-        self.moveSpeed = 1
+        self.moveSpeed = 2
         self.position = (10, 10)
 
     def getColorAt(self, x, y):
@@ -70,14 +71,10 @@ class Player(simpleGE.Sprite):
         if self.isKeyPressed(pygame.K_DOWN):
             if self.canMove("DOWN"):
                 self.y += self.moveSpeed
-        
-
 
 def main():
     game = Game()
     game.start()
-    
-
     
 if __name__ == "__main__":
     main()

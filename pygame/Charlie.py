@@ -49,10 +49,10 @@ def main():
                 keepGoing = False
 
         #modify cardinal value
-        # cardinal_x += 5
-        # #check boundaries
-        # if cardinal_x > screen.get_width():
-        #     cardinal_x = 0
+        cardinal_x += 5
+         #check boundaries
+        if cardinal_x > screen.get_width():
+            cardinal_x = 0
 
         cardinal_y += 5
         if cardinal_y > screen.get_height():

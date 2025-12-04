@@ -51,8 +51,8 @@ class Game(simpleGE.Scene):
         else:
             self.ship.speed = 0
             
-#        if dist < 5:
-#           self.ship.speed = 0
+        if dist < 5:
+           self.ship.speed = 0
         
 def main():
     game = Game()

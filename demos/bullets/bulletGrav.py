@@ -14,7 +14,7 @@ class Bullet(simpleGE.Sprite):
     def fire(self):
         # allow only one bullet at a time
         if not self.visible:
-            self.scene.clearScreen()
+            #self.scene.clearScreen()
             self.show()
             self.position = self.parent.position
             self.moveAngle = self.parent.imageAngle

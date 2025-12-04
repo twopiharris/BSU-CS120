@@ -38,7 +38,7 @@ class Path(object):
         self.pointList = pointList
         self.counter = -1
         self.speed = speed
-        self.threshold = 15
+        self.threshold = 1
         self.rotate = False
         
         #initialize the sprite at position zero
@@ -76,6 +76,11 @@ class Game(simpleGE.Scene):
         self.player.colorRect("green", (50, 25))
             
         pointList = (
+            (289, 27),
+            (549, 216),
+            (310, 375),
+            (94, 190),
+            
             (30, 31),
             (278, 163),
             (579, 34),
@@ -86,7 +91,7 @@ class Game(simpleGE.Scene):
             (283, 218)
         )
 
-        self.path = Path(self.player, pointList, 15)
+        self.path = Path(self.player, pointList, 7)
         self.path.rotate = True
         self.path.threshold = 7
         

@@ -22,7 +22,7 @@ class Car(simpleGE.Sprite):
             self.addForce(self.accel, self.imageAngle)
             
         #compensate for drag.
-        self.speed *= (1 - self.drag)
+        #self.speed *= (1 - self.drag)
         
 class Game(simpleGE.Scene):
     def __init__(self):
